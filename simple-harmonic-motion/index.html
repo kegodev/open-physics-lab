@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive simple harmonic motion simulator for exploring a horizontal mass-spring oscillator.">
+  <title>Dinglo Simple Harmonic Motion Laboratory</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to simulator</a>
+
+  <div class="lab-shell">
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Dinglo Open Physics Lab</p>
+        <h1>Simple Harmonic Motion</h1>
+        <p class="subtitle">Explore how mass, spring stiffness, amplitude, and phase shape an ideal oscillator.</p>
+      </div>
+      <div class="header-actions">
+        <span class="status-pill"><span class="status-dot" aria-hidden="true"></span>Live model</span>
+        <a class="ghost-link" href="../">All experiments</a>
+      </div>
+    </header>
+
+    <main id="main-content" class="workspace">
+      <div class="visual-column">
+        <section class="panel apparatus-panel" aria-labelledby="apparatus-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Mass–spring system</p>
+              <h2 id="apparatus-title">Oscillator</h2>
+            </div>
+            <p id="run-status" class="run-status" aria-live="polite">Running</p>
+          </div>
+
+          <div class="measurement-grid" aria-label="Live measurements">
+            <div class="measurement">
+              <span>Displacement</span>
+              <strong id="x-value">0.000 m</strong>
+            </div>
+            <div class="measurement">
+              <span>Velocity</span>
+              <strong id="v-value">0.000 m/s</strong>
+            </div>
+            <div class="measurement">
+              <span>Acceleration</span>
+              <strong id="a-value">0.000 m/s²</strong>
+            </div>
+            <div class="measurement">
+              <span>Elapsed time</span>
+              <strong id="time-value">0.00 s</strong>
+            </div>
+          </div>
+
+          <canvas id="apparatus-canvas" role="img" aria-label="Animated horizontal spring with a mass oscillating about equilibrium">
+            Animated mass-spring oscillator showing displacement, velocity, and acceleration.
+          </canvas>
+
+          <div class="transport" aria-label="Simulation controls">
+            <button id="play-button" class="primary-button" type="button" aria-pressed="true">
+              <span class="button-icon" aria-hidden="true">Ⅱ</span>
+              <span id="play-label">Pause</span>
+            </button>
+            <button id="step-button" class="secondary-button" type="button">Step +Δt</button>
+            <button id="reset-button" class="secondary-button" type="button">Reset</button>
+            <label class="speed-control" for="speed-input">
+              <span>Playback</span>
+              <select id="speed-input">
+                <option value="0.25">0.25×</option>
+                <option value="0.5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.5">1.5×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel graph-panel" aria-labelledby="graph-title">
+          <div class="panel-heading graph-heading">
+            <div>
+              <p class="section-kicker">Two complete periods</p>
+              <h2 id="graph-title">Motion traces</h2>
+            </div>
+            <div class="trace-toggles" aria-label="Graph traces">
+              <label><input id="show-velocity" type="checkbox" checked> Velocity</label>
+              <label><input id="show-acceleration" type="checkbox" checked> Acceleration</label>
+            </div>
+          </div>
+          <canvas id="graph-canvas" role="img" aria-label="Position, velocity, and acceleration plotted over two periods">
+            Motion graph plotting displacement, velocity, and acceleration against time.
+          </canvas>
+        </section>
+      </div>
+
+      <aside class="panel control-panel" aria-labelledby="controls-title">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Experiment setup</p>
+            <h2 id="controls-title">Parameters</h2>
+          </div>
+        </div>
+
+        <div class="control-stack">
+          <label class="range-field" for="amplitude-input">
+            <span class="range-header"><span>Amplitude, A</span><output id="amplitude-output">0.35 m</output></span>
+            <input id="amplitude-input" type="range" min="0.05" max="0.60" step="0.01" value="0.35">
+          </label>
+
+          <label class="range-field" for="mass-input">
+            <span class="range-header"><span>Mass, m</span><output id="mass-output">1.00 kg</output></span>
+            <input id="mass-input" type="range" min="0.25" max="4" step="0.05" value="1">
+          </label>
+
+          <label class="range-field" for="spring-input">
+            <span class="range-header"><span>Spring constant, k</span><output id="spring-output">16 N/m</output></span>
+            <input id="spring-input" type="range" min="2" max="50" step="1" value="16">
+          </label>
+
+          <label class="range-field" for="phase-input">
+            <span class="range-header"><span>Initial phase, φ</span><output id="phase-output">0°</output></span>
+            <input id="phase-input" type="range" min="0" max="360" step="5" value="0">
+          </label>
+        </div>
+
+        <div class="presets" aria-labelledby="preset-title">
+          <h3 id="preset-title">Quick setups</h3>
+          <div class="preset-grid">
+            <button type="button" data-preset="slow">Slow &amp; heavy</button>
+            <button type="button" data-preset="balanced">Balanced</button>
+            <button type="button" data-preset="fast">Fast &amp; light</button>
+          </div>
+        </div>
+
+        <section class="derived-panel" aria-labelledby="derived-title">
+          <div class="subheading-row">
+            <h3 id="derived-title">Derived quantities</h3>
+            <span>Ideal, frictionless</span>
+          </div>
+          <dl class="derived-grid">
+            <div><dt>Angular frequency</dt><dd id="omega-value">4.00 rad/s</dd></div>
+            <div><dt>Period</dt><dd id="period-value">1.57 s</dd></div>
+            <div><dt>Frequency</dt><dd id="frequency-value">0.64 Hz</dd></div>
+            <div><dt>Total energy</dt><dd id="energy-value">0.98 J</dd></div>
+          </dl>
+        </section>
+
+        <section class="energy-panel" aria-labelledby="energy-title">
+          <div class="subheading-row">
+            <h3 id="energy-title">Energy exchange</h3>
+            <span id="energy-sum">Σ 0.98 J</span>
+          </div>
+          <div class="energy-row">
+            <span>Potential</span>
+            <div class="energy-track"><span id="potential-bar" class="potential-bar"></span></div>
+            <output id="potential-value">0.98 J</output>
+          </div>
+          <div class="energy-row">
+            <span>Kinetic</span>
+            <div class="energy-track"><span id="kinetic-bar" class="kinetic-bar"></span></div>
+            <output id="kinetic-value">0.00 J</output>
+          </div>
+        </section>
+
+        <section class="equation-panel" aria-label="Simple harmonic motion equations">
+          <p>x(t) = A cos(ωt + φ)</p>
+          <p>ω = √(k / m) &nbsp;·&nbsp; T = 2π / ω</p>
+          <p>a(t) = −ω²x(t)</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <p>Change one parameter at a time and watch the apparatus, traces, and energy respond together.</p>
+      <a href="https://github.com/kegodev/open-physics-lab">View the project on GitHub</a>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
