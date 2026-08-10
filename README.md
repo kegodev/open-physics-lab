@@ -22,10 +22,19 @@ Change the pendulum length, gravity, mass, and initial angle; then compare the m
 
 **[Launch the Simple Pendulum Simulator →](https://kegodev.github.io/open-physics-lab/simple-pendulum/)**
 
+### Simple Harmonic Motion Simulator
+
+[![Simple Harmonic Motion Simulator showing a horizontal mass-spring oscillator, adjustable parameters, energy exchange, and motion traces](assets/simple-harmonic-motion-simulator-1786355518671.jpg)](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/)
+
+Explore an ideal horizontal mass–spring oscillator. Adjust amplitude, mass, spring stiffness, phase, and playback speed while watching displacement, velocity, acceleration, energy, and synchronized motion traces.
+
+**[Launch the Simple Harmonic Motion Simulator →](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/)**
+
 | Experiment | Concepts | Live simulator |
 | --- | --- | --- |
 | Photoelectric Effect | Photon energy, work function, stopping potential, photocurrent | [Open simulator](https://kegodev.github.io/open-physics-lab/) |
 | Simple Pendulum | Period, gravity, length, angular motion, energy | [Open simulator](https://kegodev.github.io/open-physics-lab/simple-pendulum/) |
+| Simple Harmonic Motion | Amplitude, angular frequency, phase, spring force, energy conservation | [Open simulator](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/) |
 
 ## Why contribute?
 
@@ -49,7 +58,10 @@ No build tools or package installation are required.
 1. Fork this repository for the purpose of contributing.
 2. Clone your fork and open the project directory.
 3. Serve the files with a small local HTTP server, for example `python -m http.server 8000`.
-4. Visit `http://localhost:8000` for the photoelectric simulator or `http://localhost:8000/simple-pendulum/` for the pendulum.
+4. Open the relevant route:
+   - `http://localhost:8000` — Photoelectric Effect
+   - `http://localhost:8000/simple-pendulum/` — Simple Pendulum
+   - `http://localhost:8000/simple-harmonic-motion/` — Simple Harmonic Motion
 
 Local copies and modifications are permitted only for evaluating the project and preparing a contribution back to this repository, as described in the license.
 
@@ -64,6 +76,10 @@ open-physics-lab/
 │   ├── index.html             # Simple Pendulum page
 │   ├── styles.css             # Simple Pendulum styles
 │   └── script.js              # Simple Pendulum simulation
+├── simple-harmonic-motion/
+│   ├── index.html             # Simple Harmonic Motion page
+│   ├── styles.css             # Simple Harmonic Motion styles
+│   └── script.js              # Simple Harmonic Motion simulation
 └── assets/                    # README screenshots
 ```
 
@@ -92,5 +108,6 @@ See the [Dinglo Restricted Collaboration License v1.0](LICENSE) for the complete
 - Repository: [github.com/kegodev/open-physics-lab](https://github.com/kegodev/open-physics-lab)
 - Photoelectric Effect: [kegodev.github.io/open-physics-lab](https://kegodev.github.io/open-physics-lab/)
 - Simple Pendulum: [kegodev.github.io/open-physics-lab/simple-pendulum](https://kegodev.github.io/open-physics-lab/simple-pendulum/)
+- Simple Harmonic Motion: [kegodev.github.io/open-physics-lab/simple-harmonic-motion](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/)
 
 The word “Open” in the project name describes public access and collaboration; it does not mean that the Work is licensed as open-source software.
