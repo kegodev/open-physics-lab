@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Dinglo Photoelectric Effect Virtual Laboratory - an undergraduate simulator for investigating photocurrent, stopping potential, Planck's constant and work function." />
+  <meta name="theme-color" content="#071426" />
+  <title>Dinglo Photoelectric Effect Virtual Laboratory</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-dinglo-simulator-workspace="true">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-group">
+        <a class="simulator-back-link" href="./" aria-label="Photoelectric Effect simulator home">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </a>
+        <div class="brand-mark" aria-hidden="true">
+          <span class="brand-orbit"></span>
+          <span class="brand-core"></span>
+        </div>
+        <div>
+          <p class="eyebrow">Dinglo Virtual Physics Laboratory</p>
+          <h1>Photoelectric Effect</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="mode-switch" role="group" aria-label="Simulation mode">
+          <button class="mode-btn active" data-mode="learn">Learn</button>
+          <button class="mode-btn" data-mode="laboratory">Laboratory</button>
+          <button class="mode-btn" data-mode="assessment">Assessment</button>
+        </div>
+        <button id="newSessionBtn" class="btn ghost">New session</button>
+        <button id="openManualBtn" class="btn ghost">Manual</button>
+        <button id="themeBtn" class="icon-btn" aria-label="Toggle light and dark appearance" title="Toggle appearance">◐</button>
+      </div>
+    </header>
+
+    <div class="status-strip" aria-live="polite">
+      <div><span class="status-dot" id="lampStatusDot"></span><span id="lampStatusText">Lamp off</span></div>
+      <div><strong>Mode:</strong> <span id="modeStatus">Learn</span></div>
+      <div><strong>Session:</strong> <span id="sessionId">-</span></div>
+      <div><strong>Autosave:</strong> <span id="saveStatus">Ready</span></div>
+    </div>
+
+    <nav class="section-tabs" aria-label="Simulator sections">
+      <button class="section-tab active" data-section="bench">Virtual bench</button>
+      <button class="section-tab" data-section="notebook">Notebook & graphs</button>
+      <button class="section-tab" data-section="theory">Theory & pre-lab</button>
+      <button class="section-tab" data-section="report">Report</button>
+    </nav>
+
+    <main>
+      <section id="section-bench" class="app-section active">
+        <div class="main-grid">
+          <div class="bench-column">
+          <article class="panel apparatus-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Interactive apparatus</p>
+                <h2>Optical bench and photoelectric tube</h2>
+              </div>
+              <div class="bench-actions">
+                <button id="lampBtn" class="btn primary">Switch lamp on</button>
+                <button id="shutterBtn" class="btn secondary" disabled>Open shutter</button>
+                <button id="resetBenchBtn" class="btn danger-outline">Reset bench</button>
+              </div>
+            </div>
+
+            <div class="warmup-wrap" id="warmupWrap" hidden>
+              <div class="warmup-label"><span>Lamp stabilisation</span><span id="warmupText">0%</span></div>
+              <div class="progress"><span id="warmupBar"></span></div>
+              <p class="microcopy">The accelerated warm-up represents source and amplifier stabilisation.</p>
+            </div>
+
+            <div class="apparatus-stage" id="apparatusStage">
+              <svg id="apparatusSvg" viewBox="0 0 1120 460" role="img" aria-label="Virtual photoelectric effect apparatus">
+                <defs>
+                  <linearGradient id="benchGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#1d2a3b"/>
+                    <stop offset="1" stop-color="#0f1c2d"/>
+                  </linearGradient>
+                  <linearGradient id="tubeGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#d8f7ff" stop-opacity="0.18"/>
+                    <stop offset="1" stop-color="#6cc7e8" stop-opacity="0.05"/>
+                  </linearGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="6" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity="0.35"/>
+                  </filter>
+                </defs>
+
+                <rect x="40" y="365" width="1040" height="45" rx="12" fill="url(#benchGrad)"/>
+                <rect x="70" y="410" width="980" height="8" rx="4" fill="#2f435a"/>
+
+                <g id="lampGroup" transform="translate(70,105)" filter="url(#softShadow)">
+                  <rect width="185" height="190" rx="18" fill="#17263a" stroke="#3b516a" stroke-width="2"/>
+                  <rect x="18" y="18" width="149" height="44" rx="9" fill="#071426"/>
+                  <text x="92.5" y="46" text-anchor="middle" fill="#8ba7c3" font-size="16" font-weight="700">MERCURY SOURCE</text>
+                  <circle cx="92" cy="112" r="34" fill="#1b2836" stroke="#556b80" stroke-width="3"/>
+                  <circle id="lampBulb" cx="92" cy="112" r="20" fill="#5c6874"/>
+                  <circle id="lampHalo" cx="92" cy="112" r="42" fill="none" stroke="#ffe46a" stroke-width="4" opacity="0"/>
+                  <rect x="55" y="160" width="75" height="15" rx="7" fill="#071426"/>
+                  <circle id="lampLed" cx="145" cy="167" r="6" fill="#6f7d8b"/>
+                </g>
+
+                <g id="filterGroup" transform="translate(282,130)">
+                  <circle cx="60" cy="80" r="60" fill="#132238" stroke="#4d647e" stroke-width="3"/>
+                  <circle cx="60" cy="80" r="15" fill="#263c54"/>
+                  <g id="filterSwatches"></g>
+                  <text x="60" y="165" text-anchor="middle" fill="#9fb5cc" font-size="14">Filter wheel</text>
+                </g>
+
+                <g id="apertureGroup" transform="translate(415,145)">
+                  <rect width="70" height="130" rx="12" fill="#152438" stroke="#465e77" stroke-width="2"/>
+                  <circle cx="35" cy="56" r="22" fill="#050a0f" stroke="#647c92" stroke-width="2"/>
+                  <circle id="apertureHole" cx="35" cy="56" r="8" fill="#d9f6ff" opacity="0.35"/>
+                  <text x="35" y="100" text-anchor="middle" fill="#9fb5cc" font-size="12">Aperture</text>
+                </g>
+
+                <g id="beamGroup" opacity="0">
+                  <polygon id="beamPolygon" points="255,207 415,190 415,215" fill="#76d5ff" opacity="0.35" filter="url(#glow)"/>
+                  <polygon id="beamPolygon2" points="485,201 610,185 610,225" fill="#76d5ff" opacity="0.30" filter="url(#glow)"/>
+                  <g id="photonParticles"></g>
+                </g>
+
+                <g id="tubeGroup" transform="translate(610,105)" filter="url(#softShadow)">
+                  <rect x="0" y="35" width="250" height="180" rx="88" fill="url(#tubeGrad)" stroke="#5d839e" stroke-width="3"/>
+                  <rect x="-14" y="82" width="30" height="88" rx="7" fill="#25384c"/>
+                  <rect x="234" y="82" width="30" height="88" rx="7" fill="#25384c"/>
+                  <rect id="cathodePlate" x="40" y="72" width="18" height="106" rx="5" fill="#d9bd75"/>
+                  <rect id="anodePlate" x="194" y="72" width="18" height="106" rx="5" fill="#9eb9cb"/>
+                  <text x="49" y="62" text-anchor="middle" fill="#b9cfe0" font-size="13">Cathode</text>
+                  <text x="203" y="62" text-anchor="middle" fill="#b9cfe0" font-size="13">Anode</text>
+                  <g id="electronParticles"></g>
+                  <path d="M49 180 L49 245 L112 245" fill="none" stroke="#d59d47" stroke-width="4"/>
+                  <path d="M203 180 L203 245 L138 245" fill="none" stroke="#7bc6f2" stroke-width="4"/>
+                  <circle cx="112" cy="245" r="7" fill="#d59d47"/>
+                  <circle cx="138" cy="245" r="7" fill="#7bc6f2"/>
+                  <text x="125" y="278" text-anchor="middle" fill="#9fb5cc" font-size="14">Evacuated phototube</text>
+                </g>
+
+                <g transform="translate(880,70)">
+                  <rect width="195" height="145" rx="16" fill="#17263a" stroke="#3f5872" stroke-width="2"/>
+                  <text x="97" y="27" text-anchor="middle" fill="#9fb5cc" font-size="13">VARIABLE DC SUPPLY</text>
+                  <rect x="22" y="43" width="151" height="42" rx="8" fill="#071426"/>
+                  <text id="svgVoltageDisplay" x="97" y="72" text-anchor="middle" fill="#78e1ff" font-size="25" font-family="monospace">0.000 V</text>
+                  <circle cx="50" cy="110" r="10" fill="#d9534f"/><text x="50" y="135" text-anchor="middle" fill="#8ea6bd" font-size="10">+</text>
+                  <circle cx="145" cy="110" r="10" fill="#222" stroke="#789"/><text x="145" y="135" text-anchor="middle" fill="#8ea6bd" font-size="10">−</text>
+                </g>
+
+                <g transform="translate(880,235)">
+                  <rect width="195" height="118" rx="16" fill="#17263a" stroke="#3f5872" stroke-width="2"/>
+                  <text x="97" y="25" text-anchor="middle" fill="#9fb5cc" font-size="13">SENSITIVE CURRENT METER</text>
+                  <rect x="18" y="38" width="159" height="46" rx="8" fill="#071426"/>
+                  <text id="svgCurrentDisplay" x="97" y="69" text-anchor="middle" fill="#9df8bc" font-size="23" font-family="monospace">0.00 pA</text>
+                  <text id="svgMeterState" x="97" y="102" text-anchor="middle" fill="#829bb2" font-size="11">Range: 100 pA</text>
+                </g>
+
+                <path d="M722 350 C790 390 855 335 925 345" fill="none" stroke="#d59d47" stroke-width="4"/>
+                <path d="M748 350 C825 415 895 390 1025 350" fill="none" stroke="#72c7f1" stroke-width="4"/>
+              </svg>
+
+              <div class="apparatus-readouts">
+                <div><span>Photon energy</span><strong id="photonEnergyReadout">- eV</strong></div>
+                <div><span>Threshold status</span><strong id="thresholdReadout">Lamp off</strong></div>
+                <div><span>Measured current</span><strong id="currentReadout">0.00 pA</strong></div>
+                <div class="learn-only"><span>Theoretical stopping potential</span><strong id="stoppingReadout">- V</strong></div>
+              </div>
+            </div>
+
+            <div class="bench-message info" id="benchMessage" role="status">
+              Switch on the source, allow it to stabilise, choose a wavelength, calibrate the current meter, and open the shutter.
+            </div>
+          </article>
+
+        <div class="lower-grid">
+          <article class="panel checklist-panel">
+            <div class="panel-heading compact"><div><p class="eyebrow">Technique</p><h2>Practical checklist</h2></div></div>
+            <div id="checklist" class="checklist"></div>
+          </article>
+          <article class="panel live-physics-panel">
+            <div class="panel-heading compact"><div><p class="eyebrow">Live model</p><h2>What the apparatus is doing</h2></div></div>
+            <div class="equation-card">
+              <p>Einstein photoelectric equation</p>
+              <strong>K<sub>max</sub> = hf − φ</strong>
+            </div>
+            <div class="metric-grid">
+              <div><span>Frequency</span><strong id="frequencyMetric">- Hz</strong></div>
+              <div><span>Maximum kinetic energy</span><strong id="kineticMetric">- eV</strong></div>
+              <div><span>Saturation current</span><strong id="saturationMetric">- pA</strong></div>
+              <div><span>Collection fraction</span><strong id="collectionMetric">- %</strong></div>
+            </div>
+            <p class="explanation" id="liveExplanation">The lamp is currently off.</p>
+          </article>
+        </div>
+          </div>
+
+          <aside class="panel controls-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Experimental controls</p>
+                <h2>Configure the apparatus</h2>
+              </div>
+            </div>
+
+            <div class="control-section">
+              <h3>Light and optics</h3>
+              <label class="field">
+                <span>Wavelength filter</span>
+                <select id="wavelengthSelect"></select>
+              </label>
+              <div class="two-col">
+                <label class="field">
+                  <span>Intensity <output id="intensityOut">60%</output></span>
+                  <input id="intensityInput" type="range" min="5" max="100" value="60" step="1" />
+                </label>
+                <label class="field">
+                  <span>Aperture</span>
+                  <select id="apertureSelect">
+                    <option value="2">2 mm</option>
+                    <option value="4" selected>4 mm</option>
+                    <option value="8">8 mm</option>
+                  </select>
+                </label>
+              </div>
+              <label class="field">
+                <span>Source distance <output id="distanceOut">25 cm</output></span>
+                <input id="distanceInput" type="range" min="15" max="60" value="25" step="1" />
+              </label>
+            </div>
+
+            <div class="control-section">
+              <h3>Phototube</h3>
+              <label class="field">
+                <span>Cathode material</span>
+                <select id="cathodeSelect"></select>
+              </label>
+              <div class="material-card learn-only">
+                <span>Nominal work function</span>
+                <strong id="workFunctionReadout">- eV</strong>
+                <small>Assessment mode hides this parameter.</small>
+              </div>
+            </div>
+
+            <div class="control-section">
+              <h3>Electrical controls</h3>
+              <label class="field">
+                <span>Anode potential <output id="voltageOut">0.000 V</output></span>
+                <input id="voltageInput" type="range" min="-5" max="10" value="0" step="0.01" />
+              </label>
+              <div class="voltage-entry">
+                <button class="step-btn" data-step="-0.1">−0.10</button>
+                <input id="voltageNumber" type="number" min="-5" max="10" step="0.01" value="0.00" aria-label="Exact anode potential" />
+                <button class="step-btn" data-step="0.1">+0.10</button>
+              </div>
+              <label class="field">
+                <span>Current range</span>
+                <select id="rangeSelect">
+                  <option value="10">10 pA</option>
+                  <option value="100" selected>100 pA</option>
+                  <option value="1000">1 nA</option>
+                  <option value="10000">10 nA</option>
+                </select>
+              </label>
+              <div class="calibration-box">
+                <label class="switch-row">
+                  <span>Calibration mode</span>
+                  <input id="calibrationToggle" type="checkbox" />
+                  <span class="switch"></span>
+                </label>
+                <button id="zeroMeterBtn" class="btn secondary full">Zero current meter</button>
+                <p id="calibrationStatus" class="microcopy">Close the shutter and enable calibration mode before zeroing.</p>
+              </div>
+            </div>
+
+            <div class="control-section">
+              <h3>Measurement</h3>
+              <button id="recordReadingBtn" class="btn primary full">Record current reading</button>
+              <button id="demoDataBtn" class="btn ghost full learn-only">Load demonstration dataset</button>
+              <div class="two-col actions-grid">
+                <button id="scanBtn" class="btn secondary">Run voltage sweep</button>
+                <button id="estimateVsBtn" class="btn secondary">Estimate stopping V</button>
+              </div>
+              <label class="field">
+                <span>Zero-current criterion <output id="thresholdOut">1.0 pA</output></span>
+                <input id="thresholdInput" type="range" min="0.2" max="5" value="1" step="0.1" />
+              </label>
+            </div>
+          </aside>
+        </div>
+
+      </section>
+
+      <section id="section-notebook" class="app-section">
+        <div class="notebook-grid">
+          <article class="panel data-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">Raw data</p><h2>Current-voltage readings</h2></div>
+              <div class="panel-actions">
+                <button id="exportCsvBtn" class="btn secondary">Export CSV</button>
+                <button id="exportApparatusSvgBtn" class="btn secondary">Save apparatus SVG</button>
+                <button id="clearReadingsBtn" class="btn danger-outline">Clear readings</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="readingsTable">
+                <thead><tr><th>#</th><th>Time</th><th>λ (nm)</th><th>f (10¹⁴ Hz)</th><th>Intensity</th><th>Aperture</th><th>Bias (V)</th><th>Current (pA)</th><th>Range</th><th></th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="microcopy">Raw readings are preserved exactly as recorded. Delete only clearly invalid measurements and document why in your notes.</p>
+          </article>
+
+          <article class="panel graph-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">Graph 1</p><h2>Photocurrent versus anode potential</h2></div>
+              <div class="graph-controls">
+                <select id="ivWavelengthFilter" aria-label="Filter graph by wavelength"></select>
+                <button id="fitIvBtn" class="btn secondary">Fit selected sweep</button>
+                <button id="exportIvSvgBtn" class="btn secondary">Save graph SVG</button>
+              </div>
+            </div>
+            <div class="canvas-wrap"><canvas id="ivCanvas" width="900" height="430" aria-label="Current versus voltage graph"></canvas></div>
+            <div id="ivSummary" class="analysis-summary">Record at least three readings to display the current-voltage curve.</div>
+          </article>
+
+          <article class="panel data-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">Processed data</p><h2>Stopping-potential dataset</h2></div>
+              <div class="panel-actions"><button id="exportVfSvgBtn" class="btn secondary">Save graph SVG</button><button id="clearStoppingBtn" class="btn danger-outline">Clear results</button></div>
+            </div>
+            <div class="manual-vs-entry">
+              <label>λ (nm)<input id="manualLambda" type="number" min="180" max="900" step="1" /></label>
+              <label>V<sub>s</sub> (V)<input id="manualVs" type="number" min="0" max="8" step="0.001" /></label>
+              <label>u(V<sub>s</sub>) (V)<input id="manualUnc" type="number" min="0.001" max="1" step="0.001" value="0.020" /></label>
+              <button id="addManualVsBtn" class="btn secondary">Add result</button>
+            </div>
+            <div class="table-wrap compact-table">
+              <table id="stoppingTable"><thead><tr><th>#</th><th>λ (nm)</th><th>f (10¹⁴ Hz)</th><th>V<sub>s</sub> (V)</th><th>u(V<sub>s</sub>)</th><th>Method</th><th></th></tr></thead><tbody></tbody></table>
+            </div>
+          </article>
+
+          <article class="panel graph-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">Graph 2</p><h2>Stopping potential versus frequency</h2></div>
+              <button id="regressionBtn" class="btn primary">Calculate Planck constant</button>
+            </div>
+            <div class="canvas-wrap"><canvas id="vfCanvas" width="900" height="430" aria-label="Stopping potential versus frequency graph"></canvas></div>
+            <div id="regressionSummary" class="analysis-summary">Add at least three stopping-potential results at different wavelengths.</div>
+          </article>
+
+          <article class="panel notes-panel full-span">
+            <div class="panel-heading"><div><p class="eyebrow">Laboratory notebook</p><h2>Observations, anomalies and interpretation</h2></div></div>
+            <textarea id="labNotes" rows="8" placeholder="Record calibration details, unexpected readings, rejected points, uncertainty sources and your interpretation..."></textarea>
+          </article>
+        </div>
+      </section>
+
+      <section id="section-theory" class="app-section">
+        <div class="theory-grid">
+          <article class="panel theory-content">
+            <p class="eyebrow">Foundation</p>
+            <h2>Photoelectric-effect theory</h2>
+            <p>When electromagnetic radiation strikes a suitable metal surface, electrons may be emitted. Each photon carries energy <strong>E = hf = hc/λ</strong>. An electron can escape only when the photon energy exceeds the material work function, φ.</p>
+            <div class="theory-equations">
+              <div><span>Photon energy</span><strong>E = hf = hc/λ</strong></div>
+              <div><span>Maximum kinetic energy</span><strong>K<sub>max</sub> = hf − φ</strong></div>
+              <div><span>Stopping potential</span><strong>eV<sub>s</sub> = hf − φ</strong></div>
+              <div><span>Linear form</span><strong>V<sub>s</sub> = (h/e)f − φ/e</strong></div>
+            </div>
+            <h3>Predictions to test</h3>
+            <ul>
+              <li>Below the threshold frequency, no photoelectrons are emitted, regardless of intensity.</li>
+              <li>At fixed frequency, increasing intensity increases photocurrent and saturation current.</li>
+              <li>At fixed frequency, intensity should not materially change the stopping potential.</li>
+              <li>Increasing frequency increases maximum kinetic energy and stopping potential.</li>
+              <li>A graph of V<sub>s</sub> against frequency should be linear, with slope h/e.</li>
+            </ul>
+            <h3>Instrument realism in this simulator</h3>
+            <p>The virtual meter includes dark current, a session-specific zero offset, random noise, finite resolution and overload. The source includes warm-up drift, aperture scaling, inverse-square distance scaling and wavelength-dependent response. These effects are deliberately modest so that the correct physics remains recoverable through good technique.</p>
+          </article>
+
+          <article class="panel prelab-panel">
+            <p class="eyebrow">Readiness check</p>
+            <h2>Pre-laboratory quiz</h2>
+            <form id="prelabForm" class="quiz-form">
+              <fieldset>
+                <legend>1. Increasing light intensity above threshold mainly increases:</legend>
+                <label><input type="radio" name="q1" value="a" /> The energy of each photon</label>
+                <label><input type="radio" name="q1" value="b" /> The number of emitted electrons</label>
+                <label><input type="radio" name="q1" value="c" /> The work function</label>
+              </fieldset>
+              <fieldset>
+                <legend>2. The stopping potential is the retarding potential at which:</legend>
+                <label><input type="radio" name="q2" value="a" /> The photocurrent reaches a practical zero threshold</label>
+                <label><input type="radio" name="q2" value="b" /> The lamp switches off</label>
+                <label><input type="radio" name="q2" value="c" /> The cathode melts</label>
+              </fieldset>
+              <fieldset>
+                <legend>3. The slope of V<sub>s</sub> versus f is:</legend>
+                <label><input type="radio" name="q3" value="a" /> e/h</label>
+                <label><input type="radio" name="q3" value="b" /> h/e</label>
+                <label><input type="radio" name="q3" value="c" /> φ/e</label>
+              </fieldset>
+              <fieldset>
+                <legend>4. Before zeroing the current meter, the shutter should be:</legend>
+                <label><input type="radio" name="q4" value="a" /> Open</label>
+                <label><input type="radio" name="q4" value="b" /> Closed</label>
+              </fieldset>
+              <button type="submit" class="btn primary">Check answers</button>
+              <div id="quizResult" class="quiz-result"></div>
+            </form>
+          </article>
+
+          <article class="panel objectives-panel full-span">
+            <p class="eyebrow">Practical programme</p>
+            <h2>Recommended investigations</h2>
+            <div class="investigation-cards">
+              <div><strong>Investigation A</strong><span>Threshold frequency</span><p>Keep intensity fixed, vary wavelength and identify the onset of emission.</p></div>
+              <div><strong>Investigation B</strong><span>Intensity dependence</span><p>Use one wavelength, vary aperture or intensity, and compare saturation currents and stopping potentials.</p></div>
+              <div><strong>Investigation C</strong><span>Current-voltage curves</span><p>Sweep from retarding to accelerating bias and identify stopping, transition and saturation regions.</p></div>
+              <div><strong>Investigation D</strong><span>Planck constant</span><p>Measure stopping potential for at least four wavelengths and fit V<sub>s</sub> against frequency.</p></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="section-report" class="app-section">
+        <div class="report-grid">
+          <article class="panel report-form-panel">
+            <p class="eyebrow">Submission details</p>
+            <h2>Generate practical report</h2>
+            <div class="form-grid">
+              <label class="field"><span>Student name</span><input id="studentName" type="text" placeholder="Full name" /></label>
+              <label class="field"><span>Student number</span><input id="studentNumber" type="text" placeholder="Student number" /></label>
+              <label class="field"><span>Module</span><input id="moduleCode" type="text" value="Modern Physics" /></label>
+              <label class="field"><span>Lecturer</span><input id="lecturerName" type="text" placeholder="Lecturer name" /></label>
+              <label class="field"><span>Practical date</span><input id="practicalDate" type="date" /></label>
+              <label class="field"><span>Report title</span><input id="reportTitle" type="text" value="Determination of Planck's Constant Using the Photoelectric Effect" /></label>
+            </div>
+            <label class="field"><span>Conclusion</span><textarea id="reportConclusion" rows="6" placeholder="Summarise whether the results support Einstein's photoelectric equation and comment on the measured Planck constant..."></textarea></label>
+            <label class="field"><span>Major uncertainty sources</span><textarea id="reportUncertainty" rows="5" placeholder="Meter zero, zero-current criterion, voltage resolution, source stability, contact potential..."></textarea></label>
+            <div class="report-actions">
+              <button id="previewReportBtn" class="btn secondary">Refresh preview</button>
+              <button id="downloadPdfBtn" class="btn primary">Download PDF</button>
+              <button id="printReportBtn" class="btn secondary">Print report</button>
+              <button id="exportSessionBtn" class="btn secondary">Export session JSON</button>
+              <label class="btn secondary file-label">Import session<input id="importSessionInput" type="file" accept="application/json" hidden /></label>
+            </div>
+          </article>
+
+          <article class="panel report-preview-panel">
+            <div class="panel-heading compact"><div><p class="eyebrow">Preview</p><h2>Report completeness</h2></div></div>
+            <div id="reportCompleteness" class="completion-list"></div>
+            <div id="reportPreview" class="mini-report"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Dinglo Photoelectric Effect Virtual Laboratory</strong><span>Designed for undergraduate experimental physics education</span></div>
+      <div>Author: Mangena Kegorapetse · Version 1.0</div>
+    </footer>
+  </div>
+
+  <dialog id="manualDialog" class="manual-dialog">
+    <div class="dialog-heading">
+      <div><p class="eyebrow">Quick reference</p><h2>How to use the simulator</h2></div>
+      <button id="closeManualBtn" class="icon-btn" aria-label="Close manual">×</button>
+    </div>
+    <div class="manual-content">
+      <ol>
+        <li><strong>Select a mode.</strong> Learn reveals theoretical values; Laboratory hides direct answers; Assessment randomises hidden apparatus parameters.</li>
+        <li><strong>Switch on the lamp.</strong> Wait for the accelerated warm-up to complete.</li>
+        <li><strong>Calibrate the current meter.</strong> Keep the shutter closed, enable Calibration mode, choose a sensitive range and press Zero current meter.</li>
+        <li><strong>Choose the optics.</strong> Select wavelength, intensity, aperture and source distance.</li>
+        <li><strong>Open the shutter.</strong> Verify that photon energy exceeds the cathode work function.</li>
+        <li><strong>Measure an I-V curve.</strong> Apply negative retarding bias through zero into positive accelerating bias. Record multiple readings.</li>
+        <li><strong>Estimate stopping potential.</strong> Use the zero-current criterion and the recorded sweep, then repeat at several wavelengths.</li>
+        <li><strong>Analyse.</strong> Open Notebook & graphs, calculate the regression and determine Planck's constant and work function.</li>
+        <li><strong>Document.</strong> Write observations and uncertainty sources, then generate and save the practical report.</li>
+      </ol>
+      <div class="manual-warning"><strong>Important:</strong> This is a virtual experiment. Values include simulated noise and offsets. Do not treat a single reading as exact.</div>
+      <p>The complete PDF manual supplied with the project contains the full practical procedure, troubleshooting guide, assessment rubric and theory.</p>
+    </div>
+  </dialog>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
