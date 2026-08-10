@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#5b3fd6">
+  <meta name="description" content="An interactive simple pendulum laboratory by Dinglo. Explore period, energy, gravity, damping and large-angle motion.">
+  <title>Dinglo Simple Pendulum Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">D</div>
+      <div class="brand-copy">
+        <h1 class="brand-name">Dinglo Simple Pendulum</h1>
+        <p class="brand-subtitle">Interactive Physics Laboratory</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="status-pill"><span class="status-dot"></span>Works offline</div>
+      <button class="header-button" id="helpButton" type="button" aria-haspopup="dialog">
+        <b aria-hidden="true">?</b><span>Guide</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="laboratory" aria-label="Pendulum simulation">
+      <div class="lab-toolbar">
+        <div class="toolbar-copy">
+          <p class="toolbar-title">Experiment bench</p>
+          <p class="toolbar-hint">Drag the bob to any angle, then release it.</p>
+        </div>
+        <div class="preset-row" aria-label="Experiment presets">
+          <button class="preset-button" type="button" data-preset="short">Short swing</button>
+          <button class="preset-button active" type="button" data-preset="earth">Earth lab</button>
+          <button class="preset-button" type="button" data-preset="large">Large angle</button>
+          <button class="preset-button" type="button" data-preset="moon">Moon</button>
+        </div>
+      </div>
+
+      <div class="simulation-stage" id="simulationStage">
+        <canvas id="simCanvas" aria-label="Animated pendulum. Drag the pendulum bob to set its release angle."></canvas>
+        <div class="stage-badge"><strong>Direct control</strong> drag and release the bob</div>
+
+        <div class="tool-rail" aria-label="Quick display tools">
+          <button class="tool-button active" id="quickAngle" type="button" title="Show angle" aria-pressed="true">θ</button>
+          <button class="tool-button" id="quickVector" type="button" title="Show vectors" aria-pressed="false">F</button>
+          <button class="tool-button" id="quickTrail" type="button" title="Show motion trail" aria-pressed="false">•••</button>
+          <button class="tool-button" id="quickRuler" type="button" title="Show ruler" aria-pressed="false">cm</button>
+        </div>
+
+        <div class="stopwatch" id="stopwatch">
+          <div class="stopwatch-head"><span>Stopwatch</span><span id="lapCount">0 laps</span></div>
+          <output class="stopwatch-time" id="stopwatchTime">00:00.00</output>
+          <div class="stopwatch-actions">
+            <button class="mini-button primary" id="stopwatchStart" type="button">Start</button>
+            <button class="mini-button" id="stopwatchReset" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="transport" aria-label="Simulation playback">
+          <button class="transport-button" id="resetButton" type="button" title="Reset experiment" aria-label="Reset experiment">
+            <span class="reset-icon" aria-hidden="true"></span>
+          </button>
+          <button class="transport-button primary" id="playButton" type="button" title="Start simulation" aria-label="Start simulation">
+            <span class="play-icon" id="playIcon" aria-hidden="true"></span>
+          </button>
+          <button class="transport-button" id="stepButton" type="button" title="Step forward" aria-label="Step simulation forward">
+            <b aria-hidden="true">›|</b>
+          </button>
+          <div class="speed-toggle" aria-label="Playback speed">
+            <button class="speed-button" type="button" data-speed="0.25">¼×</button>
+            <button class="speed-button active" type="button" data-speed="1">1×</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="metrics-strip" aria-live="polite">
+        <div class="metric">
+          <span class="metric-label">Angle</span>
+          <output class="metric-value purple" id="angleMetric">20.0°</output>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Bob speed</span>
+          <output class="metric-value" id="speedMetric">0.000 m/s</output>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Auto period</span>
+          <output class="metric-value" id="periodMetric">—</output>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Theory period</span>
+          <output class="metric-value" id="theoryMetric">2.022 s</output>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Mechanical energy</span>
+          <output class="metric-value" id="energyMetric">0.592 J</output>
+        </div>
+      </div>
+    </section>
+
+    <aside class="control-panel" aria-label="Experiment controls">
+      <div class="panel-heading">
+        <h2>Lab controls</h2>
+        <span>Live values</span>
+      </div>
+      <div class="panel-tabs" role="tablist" aria-label="Control categories">
+        <button class="panel-tab active" id="setupTab" type="button" role="tab" aria-selected="true" aria-controls="setupPanel" data-tab="setup">Setup</button>
+        <button class="panel-tab" id="measureTab" type="button" role="tab" aria-selected="false" aria-controls="measurePanel" data-tab="measure">Measure</button>
+        <button class="panel-tab" id="graphTab" type="button" role="tab" aria-selected="false" aria-controls="graphPanel" data-tab="graph">Graph</button>
+      </div>
+
+      <section class="tab-panel active" id="setupPanel" role="tabpanel" aria-labelledby="setupTab">
+        <div class="controls-columns">
+          <div>
+            <div class="control-group">
+              <div class="control-title">
+                <label for="lengthRange">String length</label>
+                <output class="control-readout" id="lengthReadout">1.00 m</output>
+              </div>
+              <input class="range" id="lengthRange" type="range" min="0.20" max="2.50" step="0.01" value="1.00">
+              <div class="range-limits"><span>0.20 m</span><span>2.50 m</span></div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-title">
+                <label for="massRange">Bob mass</label>
+                <output class="control-readout" id="massReadout">1.00 kg</output>
+              </div>
+              <input class="range" id="massRange" type="range" min="0.10" max="5.00" step="0.10" value="1.00">
+              <div class="range-limits"><span>0.10 kg</span><span>5.00 kg</span></div>
+              <p class="control-note">Mass changes force and energy, but not the ideal pendulum period.</p>
+            </div>
+
+            <div class="control-group">
+              <div class="control-title">
+                <label for="angleRange">Release angle</label>
+                <output class="control-readout" id="angleReadout">20°</output>
+              </div>
+              <input class="range" id="angleRange" type="range" min="5" max="80" step="1" value="20">
+              <div class="range-limits"><span>5°</span><span>80°</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="control-group">
+              <div class="control-title">
+                <label for="gravitySelect">Gravity</label>
+                <output class="control-readout" id="gravityReadout">9.81 m/s²</output>
+              </div>
+              <div class="gravity-row">
+                <select class="select" id="gravitySelect" aria-label="Gravity preset">
+                  <option value="1.62">Moon</option>
+                  <option value="3.71">Mars</option>
+                  <option value="9.81" selected>Earth</option>
+                  <option value="11.15">Neptune</option>
+                  <option value="24.79">Jupiter</option>
+                  <option value="custom">Custom</option>
+                </select>
+                <input class="number-input" id="gravityInput" type="number" min="0.10" max="30" step="0.01" value="9.81" aria-label="Gravity in metres per second squared">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-title">
+                <label for="dampingRange">Air resistance</label>
+                <output class="control-readout" id="dampingReadout">None</output>
+              </div>
+              <input class="range" id="dampingRange" type="range" min="0" max="0.80" step="0.01" value="0">
+              <div class="range-limits"><span>None</span><span>Strong</span></div>
+            </div>
+
+            <div class="control-group theory-card">
+              <h3>Small-angle model</h3>
+              <p class="formula">T = 2π√(L/g)</p>
+              <p class="formula-caption">Reliable at small amplitudes. The simulator solves the full nonlinear equation at every step.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="measurePanel" role="tabpanel" aria-labelledby="measureTab">
+        <div class="control-group">
+          <div class="control-title"><span>Display tools</span><span class="control-readout">Toggle</span></div>
+          <div class="switch-grid">
+            <label class="switch-card">Angle guide<input id="showAngle" type="checkbox" checked><span class="switch-ui"></span></label>
+            <label class="switch-card">Force vectors<input id="showVectors" type="checkbox"><span class="switch-ui"></span></label>
+            <label class="switch-card">Motion trail<input id="showTrail" type="checkbox"><span class="switch-ui"></span></label>
+            <label class="switch-card">Length ruler<input id="showRuler" type="checkbox"><span class="switch-ui"></span></label>
+            <label class="switch-card">Grid lines<input id="showGrid" type="checkbox" checked><span class="switch-ui"></span></label>
+            <label class="switch-card">Crossing sound<input id="soundToggle" type="checkbox"><span class="switch-ui"></span></label>
+          </div>
+        </div>
+
+        <div class="control-group measurement-card">
+          <h3>Automatic measurements</h3>
+          <div class="measurement-grid">
+            <div class="measurement"><small>Small-angle T</small><strong id="smallPeriod">2.006 s</strong></div>
+            <div class="measurement"><small>Nonlinear T</small><strong id="exactPeriod">2.022 s</strong></div>
+            <div class="measurement"><small>Measured T</small><strong id="measuredPeriod">—</strong></div>
+            <div class="measurement"><small>Difference</small><strong id="periodDifference">—</strong></div>
+            <div class="measurement"><small>Tension</small><strong id="tensionValue">9.22 N</strong></div>
+            <div class="measurement"><small>Angular speed</small><strong id="angularSpeedValue">0.000 rad/s</strong></div>
+          </div>
+        </div>
+
+        <div class="control-group insight-card">
+          <h3 id="insightTitle">What to notice</h3>
+          <p id="insightText">At 20°, the exact period is slightly longer than the small-angle prediction. Reduce the angle below 10° and compare.</p>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="graphPanel" role="tabpanel" aria-labelledby="graphTab">
+        <div class="chart-toolbar" aria-label="Graph type">
+          <button class="chart-button active" type="button" data-chart="motion">Angle–time</button>
+          <button class="chart-button" type="button" data-chart="energy">Energy</button>
+          <button class="chart-button" type="button" data-chart="phase">Phase</button>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="graphCanvas" aria-label="Live graph of pendulum data"></canvas>
+        </div>
+        <div class="chart-legend" id="chartLegend"></div>
+        <div class="control-group insight-card">
+          <h3>Live graph</h3>
+          <p id="graphHint">Angle is plotted against simulated time. Damping causes the peaks to shrink.</p>
+        </div>
+      </section>
+    </aside>
+
+    <section class="experiment-card" aria-labelledby="notebookTitle">
+      <div class="experiment-header">
+        <div class="experiment-title">
+          <h2 id="notebookTitle">Experiment notebook</h2>
+          <p>Measure at least one complete cycle, then save the current trial.</p>
+        </div>
+        <div class="experiment-actions">
+          <button class="action-button primary" id="recordButton" type="button">Record trial</button>
+          <button class="action-button" id="exportButton" type="button">Export CSV</button>
+          <button class="action-button" id="clearButton" type="button">Clear</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Trial</th>
+              <th>Length (m)</th>
+              <th>Mass (kg)</th>
+              <th>Gravity (m/s²)</th>
+              <th>Amplitude (°)</th>
+              <th>Small-angle T (s)</th>
+              <th>Exact T (s)</th>
+              <th>Measured T (s)</th>
+              <th>Error (%)</th>
+            </tr>
+          </thead>
+          <tbody id="trialBody">
+            <tr class="empty-row"><td colspan="9">No trials recorded yet. Run the pendulum and select “Record trial”.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      <span><strong>Dinglo Physics Lab</strong> · Original educational simulator by KM Digital Labs</span>
+      <span>Keyboard: Space to play/pause · R to reset · ← → to adjust angle</span>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="helpTitle">How to use this laboratory</h2>
+        <button class="close-button" id="closeHelp" type="button" aria-label="Close guide">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="help-grid">
+          <article class="help-card">
+            <h3>1. Set the pendulum</h3>
+            <p>Change length, mass, gravity, angle and air resistance. You can also grab the purple bob directly and release it.</p>
+          </article>
+          <article class="help-card">
+            <h3>2. Make measurements</h3>
+            <p>Use the stopwatch manually or wait for the automatic timer to detect a full period after two matching zero crossings.</p>
+          </article>
+          <article class="help-card">
+            <h3>3. Compare models</h3>
+            <p>The small-angle formula is shown beside the full nonlinear period. Large release angles reveal where the approximation breaks down.</p>
+          </article>
+          <article class="help-card">
+            <h3>4. Record evidence</h3>
+            <p>Save trials to the notebook and export a CSV file for graphs, reports or practical assignments.</p>
+          </article>
+        </div>
+        <div class="keyboard-list">
+          <kbd>Space</kbd><span>Play or pause the pendulum</span>
+          <kbd>R</kbd><span>Reset the current experiment</span>
+          <kbd>← / →</kbd><span>Decrease or increase the release angle</span>
+          <kbd>Esc</kbd><span>Close this guide</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
