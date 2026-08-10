@@ -1,21 +1,177 @@
-MIT License
+DINGLO RESTRICTED COLLABORATION LICENSE
+Version 1.0 — 10 August 2026
 
-Copyright (c) 2026 Kegorapetse
+IMPORTANT NOTICE
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This is a source-available license, not an open-source license. It permits use
+of the official deployment and limited copying and modification for the sole
+purpose of contributing back to the Canonical Repository. It does not permit
+sale, commercial use, redistribution, rehosting, or reuse in another project.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. DEFINITIONS
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+“Work” means the software, simulations, source code, documentation, images, and
+other material in the repository containing this License, including each
+project and any modified version or substantial portion of that material.
+
+“Canonical Repository” means:
+https://github.com/kegodev/open-physics-lab
+
+“Official Deployment” means a deployment controlled by the maintainers of the
+Canonical Repository, currently including:
+https://kegodev.github.io/open-physics-lab/
+
+“Contribution” means original material intentionally submitted for inclusion
+in the Work through a pull request, issue, patch, or other contribution channel
+provided by the Canonical Repository.
+
+“Contributor” means a person or legal entity that owns or is authorized to
+license a Contribution.
+
+“Commercial Use” means using the Work primarily for commercial advantage,
+monetary compensation, revenue generation, paid access, advertising, or in a
+product or service offered by or for a commercial entity.
+
+“Redistribution” means providing, publishing, transmitting, mirroring,
+rehosting, or making any copy or modified version of the Work available to any
+other person or through any location other than the Canonical Repository or an
+Official Deployment.
+
+2. OWNERSHIP
+
+Each Contributor retains copyright ownership of that Contributor's original
+Contribution. No Contribution transfers ownership to a maintainer, another
+Contributor, or any other person. Repository history may be used to identify
+authorship and attribution.
+
+No Contributor receives ownership of another Contributor's material merely
+because the materials are combined in the Work. All rights not expressly
+granted by this License are reserved by their respective copyright owners.
+
+3. PERMISSIONS
+
+Subject to every term of this License, the respective copyright owners grant
+you a limited, non-exclusive, non-transferable, non-sublicensable, revocable
+license to:
+
+a. access, view, and interact with the Work through the Canonical Repository
+   and Official Deployment for personal, non-commercial education, evaluation,
+   and research;
+
+b. use GitHub's built-in fork functionality and make a temporary local copy
+   solely to inspect, test, and prepare a Contribution to the Canonical
+   Repository; and
+
+c. modify that permitted fork or temporary copy solely to submit a
+   Contribution to the Canonical Repository.
+
+These permissions do not authorize any use listed in Section 5. Copies and
+modified versions made under Sections 3(b) and 3(c) must not be used for any
+other purpose and must not be redistributed except by submitting the relevant
+changes to the Canonical Repository through its contribution process.
+
+4. CONTRIBUTIONS
+
+By intentionally submitting a Contribution, the Contributor:
+
+a. retains copyright ownership of the Contributor's original Contribution;
+
+b. certifies that the Contribution is original or that the Contributor has all
+   rights needed to submit and license it; and
+
+c. grants the maintainers and recipients of the Canonical Repository a
+   non-exclusive, worldwide, royalty-free, perpetual license to reproduce,
+   integrate, maintain, and modify the Contribution for integration, and to
+   display, perform, and distribute it only as part of the Canonical Repository
+   and its Official Deployments, under this License.
+
+The grant in Section 4(c) does not authorize sale of the Contribution or its
+use in an unrelated repository, website, application, course, collection,
+dataset, product, or service. A copyright owner may separately license only
+material that owner owns. No person may separately license the combined Work
+or another Contributor's material without all required written permissions.
+
+5. PROHIBITED USES
+
+Unless every copyright owner whose rights are affected gives prior written
+permission, you must not, directly or indirectly:
+
+a. sell, rent, license for a fee, monetize, or charge for access to the Work;
+
+b. make any Commercial Use of the Work, including use in a paid product,
+   service, course, consultancy, advertising-supported offering, or internal
+   commercial tool;
+
+c. Redistribute the Work or any modified version or substantial portion of it;
+
+d. copy, mirror, publish, deploy, host, or rehost the Work outside the Canonical
+   Repository and Official Deployment;
+
+e. extract, adapt, incorporate, or reuse the Work or any substantial portion of
+   it in another repository, website, application, simulation, course,
+   collection, dataset, product, or service;
+
+f. sublicense, transfer, or purport to grant rights in the Work;
+
+g. remove or alter a copyright, authorship, attribution, or license notice; or
+
+h. claim ownership or exclusive authorship of material created by another
+   Contributor.
+
+6. GITHUB TERMS AND STATUTORY RIGHTS
+
+Rights that GitHub's Terms of Service automatically require for public
+repositories, including GitHub-hosted viewing and forking through GitHub's
+functionality, apply independently. This License grants no additional right to
+publish, distribute, use, or exploit the Work outside that functionality.
+
+Nothing in this License limits a right that applicable law does not allow the
+copyright owners to restrict, such as a mandatory exception or limitation to
+copyright. Any such use is permitted only to the extent required by law.
+
+7. TERMINATION
+
+Your permissions under this License terminate automatically and immediately if
+you breach any term. On termination, you must stop using the Work and delete
+all copies and modified versions in your possession or control, except to the
+extent retention is required by law. Sections 2, 5, 7, 8, 9, 10, and 11 survive
+termination.
+
+A copyright owner may reinstate permissions for that owner's material by
+express written notice. Reinstatement by one owner does not reinstate rights in
+material owned by anyone else.
+
+8. NO PATENT OR TRADEMARK LICENSE
+
+This License grants no patent, trademark, trade name, logo, publicity, or
+endorsement rights. Use of names solely for reasonable attribution is allowed.
+
+9. DISCLAIMER OF WARRANTY
+
+THE WORK IS PROVIDED “AS IS” AND “AS AVAILABLE,” WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF TITLE, NON-INFRINGEMENT,
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, OR RELIABILITY.
+YOU USE THE WORK AT YOUR OWN RISK.
+
+10. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, NO COPYRIGHT OWNER, CONTRIBUTOR, OR
+MAINTAINER WILL BE LIABLE FOR ANY CLAIM, LOSS, DAMAGE, OR OTHER LIABILITY,
+WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR RELATED TO THE WORK OR
+ITS USE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+11. GENERAL TERMS
+
+If any provision is unenforceable, it will be limited to the minimum extent
+necessary and the remaining provisions will continue in effect. A failure to
+enforce a provision is not a waiver. Permission for a use outside this License
+must be explicit, written, and obtained from every copyright owner whose rights
+that use would affect.
+
+This License applies to versions of the Work distributed with this License. It
+does not purport to revoke permissions validly granted for a version previously
+distributed under different license terms.
+
+For permission requests, open an issue in the Canonical Repository. An issue or
+request does not grant permission unless every required copyright owner gives
+an explicit written approval.
