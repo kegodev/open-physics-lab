@@ -1,6 +1,6 @@
 <div align="center">
 
-Dinglo Open Physics Lab
+## Dinglo Open Physics Lab
 
 Physics you can see, change, and test
 
