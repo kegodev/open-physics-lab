@@ -35,6 +35,7 @@ Explore an ideal horizontal mass–spring oscillator. Adjust amplitude, mass, sp
 | Photoelectric Effect | Photon energy, work function, stopping potential, photocurrent | [Open simulator](https://kegodev.github.io/open-physics-lab/) |
 | Simple Pendulum | Period, gravity, length, angular motion, energy | [Open simulator](https://kegodev.github.io/open-physics-lab/simple-pendulum/) |
 | Simple Harmonic Motion | Amplitude, angular frequency, phase, spring force, energy conservation | [Open simulator](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/) |
+| Blackbody Spectrum | Temperature, Visible Light | [open simulator](https://kegodev.github.io/open-physics-lab/blackbody-spectrum/) |
 
 ## Why contribute?
 
