@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0c" />
+  <title>Dinglo Blackbody Spectrum Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">D</div>
+        <div>
+          <h1>Dinglo Blackbody Spectrum Simulator</h1>
+          <p>Interactive thermal radiation laboratory</p>
+        </div>
+      </div>
+      <div class="badge">Physics · Thermal Radiation</div>
+    </header>
+
+    <section class="hero">
+      <article class="main-card">
+        <div class="section-title">
+          <div>
+            <h2>Spectral Radiance</h2>
+            <p>Explore how the intensity and peak wavelength of an ideal blackbody change with temperature.</p>
+          </div>
+        </div>
+
+        <div class="graph-shell">
+          <canvas id="spectrumCanvas"></canvas>
+          <div class="graph-note" id="graphNote">Planck distribution · wavelength scale: 100–3000 nm</div>
+          <div class="zoom-controls" aria-label="Graph zoom controls">
+            <button id="zoomIn" class="zoom-btn" type="button" aria-label="Zoom in">+</button>
+            <button id="zoomOut" class="zoom-btn" type="button" aria-label="Zoom out">−</button>
+            <button id="zoomReset" class="zoom-reset" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="line-dot"></span> Blackbody spectrum</div>
+          <div class="legend-item"><span class="dot" style="background:#a9a9b2"></span> Visible region</div>
+          <div class="legend-item"><span class="dot" style="background:#fff"></span> Wien peak</div>
+        </div>
+      </article>
+
+      <aside class="side">
+        <section class="side-card">
+          <h3>Temperature Control</h3>
+          <div class="sub">Adjust the blackbody temperature and watch the spectrum respond in real time.</div>
+
+          <div class="temp-display">
+            <strong id="tempValue">5778</strong>
+            <span>K</span>
+          </div>
+
+          <div class="slider-wrap">
+            <input id="tempSlider" type="range" min="500" max="12000" step="10" value="5778" />
+            <div class="range-labels"><span>500 K</span><span>12 000 K</span></div>
+          </div>
+
+          <div class="preset-grid">
+            <button class="preset" data-temp="1000">1000 K</button>
+            <button class="preset" data-temp="3000">3000 K</button>
+            <button class="preset active" data-temp="5778">Sun</button>
+            <button class="preset" data-temp="10000">10 000 K</button>
+          </div>
+        </section>
+
+        <section class="side-card">
+          <h3>Display Options</h3>
+          <div class="sub">Control reference layers on the graph.</div>
+
+          <div class="toggle-row">
+            <span>Visible spectrum</span>
+            <button class="switch on" id="visibleToggle" aria-label="Toggle visible spectrum"></button>
+          </div>
+          <div class="toggle-row">
+            <span>Wien peak marker</span>
+            <button class="switch on" id="peakToggle" aria-label="Toggle peak marker"></button>
+          </div>
+          <div class="toggle-row">
+            <span>Grid lines</span>
+            <button class="switch on" id="gridToggle" aria-label="Toggle grid lines"></button>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Peak wavelength</div>
+        <div class="stat-value" id="peakWavelength">501.5 nm</div>
+        <div class="stat-desc">Wien's displacement law</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Frequency at peak λ</div>
+        <div class="stat-value" id="peakFrequency">5.98 × 10¹⁴ Hz</div>
+        <div class="stat-desc">Calculated from c / λmax</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Total emitted power</div>
+        <div class="stat-value" id="powerValue">6.32 × 10⁷ W/m²</div>
+        <div class="stat-desc">Stefan–Boltzmann law, ideal surface</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Peak region</div>
+        <div class="stat-value" id="regionValue">Visible</div>
+        <div class="stat-desc">Electromagnetic region containing λmax</div>
+      </div>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="info-card">
+        <h3>What this simulator demonstrates</h3>
+        <p>
+          A blackbody is an ideal object that absorbs all incident electromagnetic radiation and emits a continuous spectrum determined only by its temperature. Increasing temperature raises the emitted intensity dramatically and shifts the peak toward shorter wavelengths.
+        </p>
+        <div class="formula">B(λ,T) = (2hc² / λ⁵) · 1 / (e^(hc/λkT) − 1)</div>
+      </article>
+
+      <article class="info-card">
+        <h3>Visible-spectrum reference</h3>
+        <p id="visualDescription">At 5778 K, the blackbody peak lies near the visible region.</p>
+        <div class="spectrum-preview">
+          <div class="preview-overlay"></div>
+          <div class="peak-marker" id="previewPeak"></div>
+        </div>
+      </article>
+    </section>
+
+    <footer>© 2026 Dinglo · Blackbody Spectrum Simulator</footer>
+  </main>
+
+<script src="script.js"></script>
+</body>
+</html>
