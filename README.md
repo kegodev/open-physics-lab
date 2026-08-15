@@ -122,7 +122,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
     </td>
     <td width="20%" align="center">
       <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
-        <img src="https://api.iconify.design/lucide:zap.svg?color=%23EF704F" width="92" height="92" alt="Electric circuit icon">
+        <img src="https://api.iconify.design/lucide:circuit-board.svg?color=%2348D7E8" width="92" height="92" alt="Electric circuit board icon">
       </a>
     </td>
   </tr>
@@ -151,11 +151,12 @@ Every simulator uses plain HTML, CSS, and JavaScript. There is no framework to l
 
 ### What the Ohm's Law lab includes
 
-- A complete circuit with a DC source, switch, resistor, ammeter, and voltmeter
-- Live `V`, `R`, `I`, and `P` readings calculated from ideal Ohm's law
+- A Dinglo-native dark instrument interface aligned with the other physics labs
+- A scientifically structured circuit with a DC source, switch, resistor, series ammeter, and parallel voltmeter
+- Live `V`, `R`, `I`, and `P` measurements plus conductance and one-second energy
 - Animated charge flow whose speed responds to current
-- A fixed-scale voltage–current graph that reveals the line's changing slope
-- Four experiment presets and an eight-row observation notebook
+- A fixed-scale voltage–current graph with the theoretical response and current operating point
+- Four experiment presets and an eight-row observation notebook with CSV export
 - Responsive controls, keyboard focus states, semantic labels, and reduced-motion support
 
 ---
