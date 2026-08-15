@@ -2,9 +2,9 @@
 
 ## Dinglo Open Physics Lab
 
-Physics you can see, change, and test
+**Physics you can see, change, and test**
 
-Browser-based experiments that turn equations into motion. Adjust real parameters, watch each model respond, and build intuition through direct exploration.
+Five browser-based experiments that turn equations into motion, measurements, and intuition. Adjust real parameters, make a prediction, and watch each model respond.
 
 <p>
   <a href="https://kegodev.github.io/open-physics-lab/">
@@ -25,16 +25,16 @@ Browser-based experiments that turn equations into motion. Adjust real parameter
   <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white" alt="GitHub Pages">
 </p>
 
-Experiments · Why contribute · Run locally · Project map · License
+[Experiments](#-experiment-gallery) · [Learning design](#-built-for-active-learning) · [Run locally](#-run-locally) · [Project map](#-project-map) · [License](#-license)
 
 </div>
 
 > [!IMPORTANT]
-> **This is a source-available collaboration project.** You may use the official simulations and fork the repository to prepare a pull request. Selling, redistributing, rehosting, or reusing the projects elsewhere is not permitted. Read the [license summary](#license) before making a local copy.
+> **This is a source-available collaboration project.** You may use the official simulations and fork the repository to prepare a pull request. Selling, redistributing, rehosting, or reusing the projects elsewhere is not permitted. Read the [license summary](#-license) before making a local copy.
 
-────────
+---
 
-<img src="https://api.iconify.design/lucide:orbit.svg?color=%232563EB" width="25" height="25" alt="" align="top"> Experiment gallery
+## 🪐 Experiment gallery
 
 Each lab pairs an interactive model with live measurements, graphs, and controls. Start with a familiar equation, then push it until your intuition catches up.
 
@@ -51,7 +51,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p><code>K<sub>max</sub> = hf - &phi;</code></p>
       <p>See how light transfers energy to electrons and produces a measurable photocurrent.</p>
       <p><strong>Adjust</strong><br>wavelength · intensity · work function · stopping voltage</p>
-      <p><a href="https://kegodev.github.io/open-physics-lab/"><strong>Launch simulator</strong></a></p>
+      <p><a href="https://kegodev.github.io/open-physics-lab/"><strong>Launch simulator →</strong></a></p>
     </td>
   </tr>
 </table>
@@ -64,7 +64,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p><code>T &asymp; 2&pi;&radic;(L/g)</code></p>
       <p>Measure oscillation in real time and compare it with the small-angle model.</p>
       <p><strong>Adjust</strong><br>length · gravity · mass · initial angle</p>
-      <p><a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/"><strong>Launch simulator</strong></a></p>
+      <p><a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/"><strong>Launch simulator →</strong></a></p>
     </td>
     <td width="58%">
       <a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/">
@@ -87,7 +87,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p><code>x(t) = A cos(&omega;t + &phi;)</code></p>
       <p>Follow displacement, velocity, acceleration, and energy through a complete oscillation.</p>
       <p><strong>Adjust</strong><br>amplitude · mass · stiffness · phase · playback speed</p>
-      <p><a href="https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/"><strong>Launch simulator</strong></a></p>
+      <p><a href="https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/"><strong>Launch simulator →</strong></a></p>
     </td>
   </tr>
 </table>
@@ -104,68 +104,106 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <h3>Blackbody Spectrum</h3>
       <p><code>&lambda;<sub>max</sub>T = b</code></p>
       <p>Explore the relationship between temperature, emitted spectrum, and the visible-light region.</p>
-      <p><a href="https://kegodev.github.io/open-physics-lab/blackbody-spectrum/"><strong>Launch simulator</strong></a></p>
+      <p><strong>Adjust</strong><br>temperature · spectrum scale</p>
+      <p><a href="https://kegodev.github.io/open-physics-lab/blackbody-spectrum/"><strong>Launch simulator →</strong></a></p>
     </td>
   </tr>
 </table>
 
-Lab index
+<table>
+  <tr>
+    <td width="80%" valign="top">
+      <p><sub>EXPERIMENT 05 · NEW</sub></p>
+      <h3>Ohm's Law Circuit</h3>
+      <p><code>V = IR</code></p>
+      <p>Build intuition for voltage, resistance, current, and electrical power in a complete series circuit.</p>
+      <p><strong>Adjust</strong><br>source voltage · resistance · circuit switch · experiment presets</p>
+      <p><a href="https://kegodev.github.io/open-physics-lab/ohms-law/"><strong>Launch simulator →</strong></a></p>
+    </td>
+    <td width="20%" align="center">
+      <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
+        <img src="https://api.iconify.design/lucide:zap.svg?color=%23EF704F" width="92" height="92" alt="Electric circuit icon">
+      </a>
+    </td>
+  </tr>
+</table>
 
-|Experiment                |Core ideas                                                            |Live lab                                                                  |
-|--------------------------|----------------------------------------------------------------------|:------------------------------------------------------------------------:|
-|**Photoelectric Effect**  |Photon energy, work function, stopping potential, photocurrent        |[Open](https://kegodev.github.io/open-physics-lab/)                       |
-|**Simple Pendulum**       |Period, gravity, length, angular motion, energy                       |[Open](https://kegodev.github.io/open-physics-lab/simple-pendulum/)       |
-|**Simple Harmonic Motion**|Amplitude, angular frequency, phase, spring force, energy conservation|[Open](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/)|
-|**Blackbody Spectrum**    |Temperature, spectrum, visible light                                  |[Open](https://kegodev.github.io/open-physics-lab/blackbody-spectrum/)    |
+### Lab index
 
-────────
+| Experiment | Core ideas | Live lab |
+|---|---|:---:|
+| **Photoelectric Effect** | Photon energy, work function, stopping potential, photocurrent | [Open](https://kegodev.github.io/open-physics-lab/) |
+| **Simple Pendulum** | Period, gravity, length, angular motion, energy | [Open](https://kegodev.github.io/open-physics-lab/simple-pendulum/) |
+| **Simple Harmonic Motion** | Amplitude, angular frequency, phase, spring force, energy conservation | [Open](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/) |
+| **Blackbody Spectrum** | Temperature, spectrum, Wien's law, visible light | [Open](https://kegodev.github.io/open-physics-lab/blackbody-spectrum/) |
+| **Ohm's Law Circuit** | Voltage, resistance, current, power, series circuits | [Open](https://kegodev.github.io/open-physics-lab/ohms-law/) |
 
-<img src="https://api.iconify.design/lucide:gauge.svg?color=%230F766E" width="25" height="25" alt="" align="top"> Built for active learning
+---
 
-|<img src="https://api.iconify.design/lucide:sliders-horizontal.svg?color=%232563EB" width="34" height="34" alt="Adjustable controls">|<img src="https://api.iconify.design/lucide:activity.svg?color=%23DC2626" width="34" height="34" alt="Live response">|<img src="https://api.iconify.design/lucide:chart-no-axes-combined.svg?color=%237C3AED" width="34" height="34" alt="Graphs and measurements">|
-|:-----------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------:|
-|**Change the model**                                                                                                                 |**Watch the response**                                                                                               |**Compare the physics**                                                                                                                      |
-|Work with meaningful physical parameters instead of fixed animations.                                                                |See motion, vectors, energy, and measurements update together.                                                       |Connect the live result to equations, traces, and idealized models.                                                                          |
+## 🎛️ Built for active learning
+
+| Adjustable controls | Live response | Graphs and measurements |
+|:---:|:---:|:---:|
+| **Change the model** | **Watch the response** | **Compare the physics** |
+| Work with meaningful physical parameters instead of fixed animations. | See motion, charge flow, energy, and measurements update together. | Connect each live result to equations, traces, and idealized models. |
 
 Every simulator uses plain HTML, CSS, and JavaScript. There is no framework to learn and no build pipeline between an idea and the browser.
 
-<img src="https://api.iconify.design/lucide:git-pull-request-arrow.svg?color=%237C3AED" width="25" height="25" alt="" align="top"> Why contribute?
+### What the Ohm's Law lab includes
+
+- A complete circuit with a DC source, switch, resistor, ammeter, and voltmeter
+- Live `V`, `R`, `I`, and `P` readings calculated from ideal Ohm's law
+- Animated charge flow whose speed responds to current
+- A fixed-scale voltage–current graph that reveals the line's changing slope
+- Four experiment presets and an eight-row observation notebook
+- Responsive controls, keyboard focus states, semantic labels, and reduced-motion support
+
+---
+
+## 🤝 Why contribute?
 
 This repository is designed for focused, useful pull requests. A contribution can be as small as one corrected label or as ambitious as a complete experiment.
 
-|Focus          |Valuable contributions                                                           |
-|---------------|---------------------------------------------------------------------------------|
-|**Interface**  |Improve mobile layout, keyboard access, screen-reader labels, or control clarity.|
-|**Physics**    |Correct an equation, unit, explanation, graph label, or numerical method.        |
-|**Learning**   |Add presets, guided challenges, classroom questions, or clearer feedback.        |
-|**Performance**|Improve animation smoothness, rendering efficiency, or numerical stability.      |
-|**Reach**      |Translate simulator text or propose a new browser-based experiment.              |
+| Focus | Valuable contributions |
+|---|---|
+| **Interface** | Improve mobile layout, keyboard access, screen-reader labels, or control clarity. |
+| **Physics** | Correct an equation, unit, explanation, graph label, or numerical method. |
+| **Learning** | Add presets, guided challenges, classroom questions, or clearer feedback. |
+| **Performance** | Improve animation smoothness, rendering efficiency, or numerical stability. |
+| **Reach** | Translate simulator text or propose a new browser-based experiment. |
 
 If something feels confusing, open an issue. If you can improve it, fork the repository and send a focused pull request.
 
-<img src="https://api.iconify.design/lucide:square-terminal.svg?color=%230F766E" width="25" height="25" alt="" align="top"> Run locally
+---
+
+## 💻 Run locally
 
 No package installation or build tools are required.
 
 1. Fork the repository for the purpose of contributing.
 2. Clone your fork and enter the project directory.
 3. Start a small local HTTP server:
-  ```bash
-python -m http.server 8000
-```
+
+   ```bash
+   python -m http.server 8000
+   ```
+
 4. Open a simulator route in your browser.
 
-|Route                                          |Experiment            |
-|-----------------------------------------------|----------------------|
-|`http://localhost:8000/`                       |Photoelectric Effect  |
-|`http://localhost:8000/simple-pendulum/`       |Simple Pendulum       |
-|`http://localhost:8000/simple-harmonic-motion/`|Simple Harmonic Motion|
-|`http://localhost:8000/blackbody-spectrum/`    |Blackbody Spectrum    |
+| Route | Experiment |
+|---|---|
+| `http://localhost:8000/` | Photoelectric Effect |
+| `http://localhost:8000/simple-pendulum/` | Simple Pendulum |
+| `http://localhost:8000/simple-harmonic-motion/` | Simple Harmonic Motion |
+| `http://localhost:8000/blackbody-spectrum/` | Blackbody Spectrum |
+| `http://localhost:8000/ohms-law/` | Ohm's Law Circuit |
 
 > [!NOTE]
 > Local copies and modifications are permitted only for evaluating the project and preparing a contribution back to this repository, as described in the license.
 
-<img src="https://api.iconify.design/lucide:folder-tree.svg?color=%232563EB" width="25" height="25" alt="" align="top"> Project map
+---
+
+## 🗂️ Project map
 
 ```text
 open-physics-lab/
@@ -173,19 +211,29 @@ open-physics-lab/
 ├── styles.css                 # Photoelectric Effect styles
 ├── script.js                  # Photoelectric Effect simulation
 ├── simple-pendulum/
-│   ├── index.html             # Simple Pendulum page
-│   ├── styles.css             # Simple Pendulum styles
-│   └── script.js              # Simple Pendulum simulation
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
 ├── simple-harmonic-motion/
-│   ├── index.html             # Simple Harmonic Motion page
-│   ├── styles.css             # Simple Harmonic Motion styles
-│   └── script.js              # Simple Harmonic Motion simulation
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
+├── blackbody-spectrum/
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
+├── ohms-law/
+│   ├── index.html             # Circuit structure and controls
+│   ├── styles.css             # Responsive lab interface
+│   └── script.js              # Physics, graph, and notebook logic
 └── assets/                    # README screenshots
 ```
 
 The small, predictable structure lets contributors work on markup, styling, or simulation logic without searching through a large framework.
 
-<img src="https://api.iconify.design/lucide:handshake.svg?color=%237C3AED" width="25" height="25" alt="" align="top"> Contributing
+---
+
+## 🧩 Contributing
 
 1. Check the existing issues or open one that describes the change.
 2. Create a focused branch in your GitHub fork.
@@ -195,26 +243,31 @@ The small, predictable structure lets contributors work on markup, styling, or s
 
 By submitting a contribution, you confirm that it is your original work, or that you have the right to submit it, and accept the contribution terms in the license. You retain copyright ownership of your original contribution. Accepted contributions receive attribution through Git history and may be integrated into this repository and its official GitHub Pages deployment.
 
-<img src="https://api.iconify.design/lucide:scale.svg?color=%23DC2626" width="25" height="25" alt="" align="top"> License
+---
+
+## ⚖️ License
 
 > **Dinglo Restricted Collaboration License v1.0**  
 > Source-available for viewing, learning, evaluation, and contribution preparation. It is **not an open-source license**.
 
-Copyright in each original contribution remains with the contributor who created it. The combined project may not be sold, commercially used, redistributed, mirrored, rehosted, sublicensed, or copied into another project without the required copyright owners’ written permission.
+Copyright in each original contribution remains with the contributor who created it. The combined project may not be sold, commercially used, redistributed, mirrored, rehosted, sublicensed, or copied into another project without the required copyright owners' written permission.
 
-GitHub-hosted viewing and forking rights supplied by GitHub’s Terms of Service continue to apply. This repository grants a narrow additional permission to make a fork or temporary local copy solely to evaluate the project and prepare a pull request for this canonical repository.
+GitHub-hosted viewing and forking rights supplied by GitHub's Terms of Service continue to apply. This repository grants a narrow additional permission to make a fork or temporary local copy solely to evaluate the project and prepare a pull request for this canonical repository.
 
 Read the complete license before copying or modifying the project.
 
-<img src="https://api.iconify.design/lucide:map-pin.svg?color=%230F766E" width="25" height="25" alt="" align="top"> Official project locations
+---
 
-|Destination               |Link                                                                                   |
-|--------------------------|---------------------------------------------------------------------------------------|
-|**Source repository**     |[github.com/kegodev/open-physics-lab](https://github.com/kegodev/open-physics-lab)     |
-|**Photoelectric Effect**  |[Open the live lab](https://kegodev.github.io/open-physics-lab/)                       |
-|**Simple Pendulum**       |[Open the live lab](https://kegodev.github.io/open-physics-lab/simple-pendulum/)       |
-|**Simple Harmonic Motion**|[Open the live lab](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/)|
-|**Blackbody Spectrum**    |[Open the live lab](https://kegodev.github.io/open-physics-lab/blackbody-spectrum/)    |
+## 📍 Official project locations
+
+| Destination | Link |
+|---|---|
+| **Source repository** | [github.com/kegodev/open-physics-lab](https://github.com/kegodev/open-physics-lab) |
+| **Photoelectric Effect** | [Open the live lab](https://kegodev.github.io/open-physics-lab/) |
+| **Simple Pendulum** | [Open the live lab](https://kegodev.github.io/open-physics-lab/simple-pendulum/) |
+| **Simple Harmonic Motion** | [Open the live lab](https://kegodev.github.io/open-physics-lab/simple-harmonic-motion/) |
+| **Blackbody Spectrum** | [Open the live lab](https://kegodev.github.io/open-physics-lab/blackbody-spectrum/) |
+| **Ohm's Law Circuit** | [Open the live lab](https://kegodev.github.io/open-physics-lab/ohms-law/) |
 
 <p align="center">
   <strong>Change a parameter. Make a prediction. Run the experiment.</strong>
