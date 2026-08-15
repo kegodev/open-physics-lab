@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore Ohm's law with an interactive circuit, live voltage, resistance, current and power measurements.">
+    <meta name="theme-color" content="#0b4539">
+    <title>Dinglo Ohm's Law Lab</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Dinglo Open Physics Lab">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <span><strong>Dinglo</strong><small>Open Physics Lab</small></span>
+      </a>
+      <div class="header-meta">
+        <span>Experiment 05 · Electricity</span>
+        <button class="text-button" id="resetLab" type="button">Reset lab</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="eyebrow">Interactive physics simulator</span>
+          <h1 id="hero-title">Watch Ohm's law <em>come alive.</em></h1>
+          <p>Adjust voltage and resistance, close the switch, and follow the current through a complete circuit. Every measurement responds instantly.</p>
+        </div>
+        <aside class="formula-panel" aria-label="Ohm's law formula">
+          <span class="formula-label">The rule</span>
+          <div class="formula-main" aria-label="Voltage equals current multiplied by resistance">
+            <strong>V</strong><span>=</span><strong>I</strong><span>×</span><strong>R</strong>
+          </div>
+          <div class="formula-key">
+            <span><b>V</b> voltage</span>
+            <span><b>I</b> current</span>
+            <span><b>R</b> resistance</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lab-shell" aria-label="Ohm's law circuit simulator">
+        <article class="circuit-board">
+          <div class="panel-heading">
+            <div><span class="eyebrow">Live circuit</span><h2>Series resistor test</h2></div>
+            <span class="status-chip active" id="statusChip"><i></i><span id="statusText">Current flowing</span></span>
+          </div>
+
+          <svg class="circuit-svg" viewBox="0 0 760 390" role="img" aria-labelledby="circuitTitle circuitDesc">
+            <title id="circuitTitle">Interactive Ohm's law circuit</title>
+            <desc id="circuitDesc">A battery, switch, ammeter, and resistor in series, with a voltmeter connected across the resistor.</desc>
+            <defs>
+              <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+                <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+              </filter>
+              <path id="flowPath" d="M110 112 H246 M326 112 H370 A43 43 0 0 0 456 112 H506 H668 H700 V310 H110 V232"></path>
+            </defs>
+
+            <g class="wires">
+              <path d="M110 112 H246"></path>
+              <path d="M326 112 H370"></path>
+              <path d="M456 112 H506"></path>
+              <path d="M654 112 H700 V310 H110 V232"></path>
+              <path d="M110 164 V112"></path>
+            </g>
+
+            <g class="battery">
+              <line x1="76" y1="176" x2="144" y2="176" class="battery-long"></line>
+              <line x1="88" y1="220" x2="132" y2="220" class="battery-short"></line>
+              <line x1="110" y1="176" x2="110" y2="164" class="wire"></line>
+              <line x1="110" y1="220" x2="110" y2="232" class="wire"></line>
+              <text x="156" y="182" class="component-label strong" id="batteryValue">9.0 V</text>
+              <text x="156" y="207" class="component-label">DC source</text>
+              <text x="55" y="183" class="polarity">+</text>
+              <text x="57" y="224" class="polarity">−</text>
+            </g>
+
+            <g class="circuit-switch">
+              <circle cx="246" cy="112" r="8"></circle>
+              <circle cx="326" cy="112" r="8"></circle>
+              <line x1="246" y1="112" x2="326" y2="112" id="switchArm"></line>
+              <text x="286" y="153" text-anchor="middle" class="component-label">switch</text>
+            </g>
+
+            <g class="meter ammeter">
+              <circle cx="413" cy="112" r="43"></circle>
+              <text x="413" y="122" text-anchor="middle" class="meter-letter">A</text>
+              <text x="413" y="177" text-anchor="middle" class="meter-reading" id="ammeterValue">27.3 mA</text>
+            </g>
+
+            <g class="resistor">
+              <path d="M506 112 L518 92 L536 132 L554 92 L572 132 L590 92 L608 132 L626 92 L642 132 L654 112"></path>
+              <text x="580" y="66" text-anchor="middle" class="component-label strong" id="resistorValue">330 Ω</text>
+              <text x="580" y="44" text-anchor="middle" class="component-label">resistor</text>
+            </g>
+
+            <g class="voltmeter">
+              <path d="M506 112 V226 H530"></path>
+              <path d="M630 226 H654 V112"></path>
+              <circle cx="580" cy="226" r="50"></circle>
+              <text x="580" y="237" text-anchor="middle" class="meter-letter">V</text>
+              <text x="580" y="294" text-anchor="middle" class="meter-reading" id="voltmeterValue">9.0 V</text>
+            </g>
+
+            <g class="direction">
+              <path d="M260 310 H360"></path>
+              <path d="M349 301 L361 310 L349 319"></path>
+              <text x="310" y="343" text-anchor="middle" class="component-label">conventional current</text>
+            </g>
+
+            <g class="electron-flow" id="electronFlow" filter="url(#glow)">
+              <circle r="5"><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+              <circle r="5"><animateMotion dur="2.4s" begin="-0.4s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+              <circle r="5"><animateMotion dur="2.4s" begin="-0.8s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+              <circle r="5"><animateMotion dur="2.4s" begin="-1.2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+              <circle r="5"><animateMotion dur="2.4s" begin="-1.6s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+              <circle r="5"><animateMotion dur="2.4s" begin="-2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+            </g>
+          </svg>
+
+          <div class="circuit-legend" aria-label="Circuit legend">
+            <span><i class="legend-line"></i> conductor</span>
+            <span><i class="legend-dot"></i> moving charge</span>
+            <span><i class="legend-ring"></i> measuring device</span>
+          </div>
+        </article>
+
+        <aside class="control-panel">
+          <div class="control-heading">
+            <div><span class="eyebrow">Experiment controls</span><h2>Change the circuit</h2></div>
+            <button class="switch-control on" id="circuitToggle" type="button" role="switch" aria-checked="true">
+              <span class="switch-track"><i></i></span><span id="toggleLabel">Closed</span>
+            </button>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label-row">
+              <label for="voltageRange">Source voltage</label>
+              <label class="number-field"><input id="voltageNumber" type="number" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage in volts"><span>V</span></label>
+            </div>
+            <input id="voltageRange" class="range voltage-range" type="range" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage">
+            <div class="range-scale"><span>0.5 V</span><span>24 V</span></div>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label-row">
+              <label for="resistanceRange">Resistance</label>
+              <label class="number-field"><input id="resistanceNumber" type="number" min="50" max="1000" step="10" value="330" aria-label="Resistance in ohms"><span>Ω</span></label>
+            </div>
+            <input id="resistanceRange" class="range resistance-range" type="range" min="50" max="1000" step="10" value="330" aria-label="Resistance">
+            <div class="range-scale"><span>50 Ω</span><span>1 kΩ</span></div>
+          </div>
+
+          <div class="presets">
+            <span class="mini-label">Quick setups</span>
+            <div class="preset-grid">
+              <button type="button" data-voltage="3" data-resistance="1000"><strong>Gentle</strong><small>3 V · 1 kΩ</small></button>
+              <button type="button" class="selected" data-voltage="9" data-resistance="330"><strong>Bench</strong><small>9 V · 330 Ω</small></button>
+              <button type="button" data-voltage="12" data-resistance="220"><strong>Bright</strong><small>12 V · 220 Ω</small></button>
+              <button type="button" data-voltage="24" data-resistance="50"><strong>High flow</strong><small>24 V · 50 Ω</small></button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="readouts" aria-label="Live measurements" aria-live="polite">
+        <article class="readout voltage-readout"><span class="metric-symbol">V</span><div><small>Voltage</small><strong><span id="voltageReadout">9.0</span> <i>V</i></strong></div></article>
+        <article class="readout resistance-readout"><span class="metric-symbol">R</span><div><small>Resistance</small><strong><span id="resistanceReadout">330</span> <i>Ω</i></strong></div></article>
+        <article class="readout current-readout"><span class="metric-symbol">I</span><div><small>Current</small><strong><span id="currentReadout">27.3</span> <i id="currentUnit">mA</i></strong></div></article>
+        <article class="readout power-readout"><span class="metric-symbol">P</span><div><small>Power</small><strong><span id="powerReadout">245</span> <i id="powerUnit">mW</i></strong></div></article>
+      </section>
+
+      <section class="insight-strip" aria-live="polite">
+        <span class="insight-icon" aria-hidden="true">↗</span>
+        <div>
+          <span class="eyebrow">What you're observing</span>
+          <h2 id="insightTitle">Ohm's law is in balance</h2>
+          <p id="insightBody">9.0 volts across 330 ohms produces 27.3 mA of current.</p>
+        </div>
+        <div class="calculation"><span>I = V ÷ R</span><strong id="calculationText">9.0 ÷ 330 = 0.0273 A</strong><small id="calculationNote"></small></div>
+      </section>
+
+      <section class="analysis-grid">
+        <article class="graph-card">
+          <div class="panel-heading compact">
+            <div><span class="eyebrow">Voltage–current graph</span><h2>A straight-line relationship</h2></div>
+            <span class="slope-badge" id="slopeBadge">slope = 1 / 330 Ω</span>
+          </div>
+          <canvas id="viGraph" width="760" height="330" role="img" aria-label="Voltage-current graph for 330 ohms"></canvas>
+          <p class="graph-note">For a fixed resistance, equal increases in voltage produce equal increases in current.</p>
+        </article>
+
+        <article class="principle-card">
+          <span class="eyebrow">Try these comparisons</span>
+          <h2>Predict, adjust, observe.</h2>
+          <div class="principle-list">
+            <div><span>01</span><p><strong>Double the voltage.</strong> Keep resistance fixed. Current doubles.</p></div>
+            <div><span>02</span><p><strong>Double the resistance.</strong> Keep voltage fixed. Current halves.</p></div>
+            <div><span>03</span><p><strong>Open the switch.</strong> The current becomes zero immediately.</p></div>
+          </div>
+          <div class="formula-triangle" aria-hidden="true"><span>V</span><span>I</span><span>R</span></div>
+        </article>
+      </section>
+
+      <section class="notebook-section">
+        <div class="section-heading">
+          <div><span class="eyebrow">Experiment notebook</span><h2>Compare your readings</h2><p>Capture up to eight circuit states and look for the pattern.</p></div>
+          <div class="notebook-actions"><button class="secondary-button hidden" id="clearReadings" type="button">Clear</button><button class="primary-button" id="recordReading" type="button">Record reading <span>+</span></button></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Trial</th><th>Voltage</th><th>Resistance</th><th>Current</th><th>Power</th><th>Circuit</th></tr></thead>
+            <tbody id="readingsBody"><tr class="empty-row"><td colspan="6">Set the controls, then record your first reading.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="formula-guide" aria-label="Ohm's law equation guide">
+        <div class="guide-intro"><span class="eyebrow">Equation guide</span><h2>Cover the value you need.</h2><p>Ohm's law can be rearranged to solve any one of the three quantities.</p></div>
+        <div class="guide-formula"><span>Find voltage</span><strong>V = I × R</strong><small>volts = amps × ohms</small></div>
+        <div class="guide-formula"><span>Find current</span><strong>I = V ÷ R</strong><small>amps = volts ÷ ohms</small></div>
+        <div class="guide-formula"><span>Find resistance</span><strong>R = V ÷ I</strong><small>ohms = volts ÷ amps</small></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">D</span><span><strong>Dinglo</strong><small>Open Physics Lab</small></span></div>
+      <p>Built for curious minds. Change one variable at a time.</p>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <noscript><p class="noscript">This simulator needs JavaScript enabled to calculate and animate the circuit.</p></noscript>
+    <script src="script.js"></script>
+  </body>
+</html>
