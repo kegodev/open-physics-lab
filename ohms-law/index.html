@@ -3,233 +3,345 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Explore Ohm's law with an interactive circuit, live voltage, resistance, current and power measurements.">
-    <meta name="theme-color" content="#0b4539">
-    <title>Dinglo Ohm's Law Lab</title>
+    <meta name="description" content="Observe Ohm's law in a Dinglo interactive physics lab with a live DC circuit, voltage and resistance controls, current measurements, graphing, and an experiment notebook.">
+    <meta name="theme-color" content="#07111f">
+    <title>Ohm's Law Circuit · Dinglo Open Physics Lab</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <header class="site-header" id="top">
-      <a class="brand" href="#top" aria-label="Dinglo Open Physics Lab">
-        <span class="brand-mark" aria-hidden="true">D</span>
-        <span><strong>Dinglo</strong><small>Open Physics Lab</small></span>
-      </a>
-      <div class="header-meta">
-        <span>Experiment 05 · Electricity</span>
-        <button class="text-button" id="resetLab" type="button">Reset lab</button>
+    <a class="skip-link" href="#circuit-bench">Skip to circuit bench</a>
+
+    <div class="app-shell" id="top">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Dinglo Open Physics Lab, Ohm's Law Circuit">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span class="brand-copy">
+            <span class="brand-kicker">Dinglo Open Physics Lab</span>
+            <strong>Ohm's Law Circuit</strong>
+            <small>Voltage · resistance · current</small>
+          </span>
+        </a>
+
+        <div class="topbar-actions">
+          <span class="live-pill"><i aria-hidden="true"></i> Live model</span>
+          <button class="quiet-button" id="resetLab" type="button">Reset experiment</button>
+          <a class="quiet-button" href="https://kegodev.github.io/open-physics-lab/">All experiments <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <div class="status-strip" aria-label="Experiment status">
+        <span><i class="status-dot online" aria-hidden="true"></i> Simulator ready</span>
+        <span><b>Experiment</b> 05 / Electricity</span>
+        <span><b>Model</b> Ideal DC</span>
+        <span id="topCircuitStatus"><i class="status-dot flowing" aria-hidden="true"></i> Closed circuit</span>
       </div>
-    </header>
 
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <span class="eyebrow">Interactive physics simulator</span>
-          <h1 id="hero-title">Watch Ohm's law <em>come alive.</em></h1>
-          <p>Adjust voltage and resistance, close the switch, and follow the current through a complete circuit. Every measurement responds instantly.</p>
-        </div>
-        <aside class="formula-panel" aria-label="Ohm's law formula">
-          <span class="formula-label">The rule</span>
-          <div class="formula-main" aria-label="Voltage equals current multiplied by resistance">
-            <strong>V</strong><span>=</span><strong>I</strong><span>×</span><strong>R</strong>
+      <nav class="section-tabs" aria-label="Lab sections">
+        <a class="active" href="#circuit-bench">Circuit bench</a>
+        <a href="#graph-panel">V–I graph</a>
+        <a href="#notebook">Notebook</a>
+        <a href="#theory">Theory</a>
+      </nav>
+
+      <main>
+        <section class="lab-intro" aria-labelledby="lab-title">
+          <div>
+            <span class="eyebrow">Interactive electricity laboratory</span>
+            <h1 id="lab-title">Observe Ohm's law in a complete circuit.</h1>
           </div>
-          <div class="formula-key">
-            <span><b>V</b> voltage</span>
-            <span><b>I</b> current</span>
-            <span><b>R</b> resistance</span>
+          <p>Change the source voltage or resistance, then watch the ammeter, voltmeter, current flow, power, and graph respond in real time.</p>
+        </section>
+
+        <section class="workspace" aria-label="Ohm's law simulator workspace">
+          <div class="visual-column">
+            <article class="panel apparatus-panel" id="circuit-bench">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-index">APPARATUS / 01</span>
+                  <h2>Series DC circuit</h2>
+                  <p>Battery, switch, ammeter and resistor in series. Voltmeter in parallel.</p>
+                </div>
+                <span class="status-chip active" id="statusChip"><i aria-hidden="true"></i><span id="statusText">Current flowing</span></span>
+              </div>
+
+              <div class="measurement-grid" aria-label="Live measurements" aria-live="polite">
+                <article class="measurement voltage-measurement">
+                  <span class="measurement-symbol">V</span>
+                  <div><small>Source voltage</small><strong><span id="voltageReadout">9.0</span><em>V</em></strong></div>
+                </article>
+                <article class="measurement resistance-measurement">
+                  <span class="measurement-symbol">R</span>
+                  <div><small>Load resistance</small><strong><span id="resistanceReadout">330</span><em>Ω</em></strong></div>
+                </article>
+                <article class="measurement current-measurement">
+                  <span class="measurement-symbol">I</span>
+                  <div><small>Circuit current</small><strong><span id="currentReadout">27.3</span><em id="currentUnit">mA</em></strong></div>
+                </article>
+                <article class="measurement power-measurement">
+                  <span class="measurement-symbol">P</span>
+                  <div><small>Load power</small><strong><span id="powerReadout">245</span><em id="powerUnit">mW</em></strong></div>
+                </article>
+              </div>
+
+              <div class="apparatus-stage">
+                <div class="stage-label"><span>DC CIRCUIT BENCH</span><span>CONVENTIONAL CURRENT →</span></div>
+                <svg class="circuit-svg" viewBox="0 0 820 430" role="img" aria-labelledby="circuitTitle circuitDesc">
+                  <title id="circuitTitle">Interactive Ohm's law series circuit</title>
+                  <desc id="circuitDesc">A DC voltage source, switch, ammeter and resistor are wired in series. A voltmeter is wired in parallel across the resistor. Moving charge markers indicate current when the switch is closed.</desc>
+                  <defs>
+                    <pattern id="stageGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+                      <path d="M24 0H0V24" fill="none" stroke="rgba(110,168,255,.08)" stroke-width="1"></path>
+                    </pattern>
+                    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                      <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+                    </filter>
+                    <path id="flowPath" d="M118 116 H254 M334 116 H376 A44 44 0 0 0 464 116 H518 H686 H724 V334 H118 V238"></path>
+                  </defs>
+
+                  <rect class="stage-grid-fill" x="0" y="0" width="820" height="430" rx="18"></rect>
+
+                  <g class="component-zones" aria-hidden="true">
+                    <rect x="46" y="133" width="145" height="136" rx="16"></rect>
+                    <rect x="216" y="58" width="156" height="108" rx="16"></rect>
+                    <rect x="380" y="54" width="102" height="126" rx="16"></rect>
+                    <rect x="500" y="48" width="208" height="137" rx="16"></rect>
+                    <rect x="498" y="207" width="190" height="135" rx="16"></rect>
+                  </g>
+
+                  <g class="wires">
+                    <path d="M118 116 H254"></path>
+                    <path d="M334 116 H376"></path>
+                    <path d="M464 116 H518"></path>
+                    <path d="M686 116 H724 V334 H118 V238"></path>
+                    <path d="M118 174 V116"></path>
+                  </g>
+
+                  <g class="battery">
+                    <text x="62" y="155" class="component-tag">DC SOURCE</text>
+                    <line x1="84" y1="185" x2="152" y2="185" class="battery-long"></line>
+                    <line x1="96" y1="229" x2="140" y2="229" class="battery-short"></line>
+                    <line x1="118" y1="185" x2="118" y2="174" class="wire"></line>
+                    <line x1="118" y1="229" x2="118" y2="238" class="wire"></line>
+                    <text x="161" y="196" class="polarity">+</text>
+                    <text x="161" y="237" class="polarity">−</text>
+                    <text x="62" y="260" class="component-reading" id="batteryValue">9.0 V</text>
+                  </g>
+
+                  <g class="circuit-switch">
+                    <text x="236" y="82" class="component-tag">SWITCH</text>
+                    <circle cx="254" cy="116" r="8"></circle>
+                    <circle cx="334" cy="116" r="8"></circle>
+                    <line x1="254" y1="116" x2="334" y2="116" id="switchArm"></line>
+                    <text x="294" y="151" text-anchor="middle" class="component-hint" id="switchSvgStatus">CLOSED</text>
+                  </g>
+
+                  <g class="meter ammeter">
+                    <text x="431" y="75" text-anchor="middle" class="component-tag">AMMETER</text>
+                    <circle cx="420" cy="116" r="44"></circle>
+                    <circle cx="420" cy="116" r="35" class="meter-inner"></circle>
+                    <text x="420" y="127" text-anchor="middle" class="meter-letter">A</text>
+                    <text x="431" y="171" text-anchor="middle" class="component-reading" id="ammeterValue">27.3 mA</text>
+                  </g>
+
+                  <g class="resistor">
+                    <text x="603" y="72" text-anchor="middle" class="component-tag">LOAD RESISTOR</text>
+                    <path d="M518 116 L532 94 L550 138 L570 94 L590 138 L610 94 L630 138 L650 94 L670 138 L686 116"></path>
+                    <text x="603" y="164" text-anchor="middle" class="component-reading" id="resistorValue">330 Ω</text>
+                  </g>
+
+                  <g class="voltmeter">
+                    <path d="M518 116 V272 H540"></path>
+                    <path d="M666 272 H686 V116"></path>
+                    <text x="603" y="230" text-anchor="middle" class="component-tag">VOLTMETER</text>
+                    <circle cx="603" cy="272" r="48"></circle>
+                    <circle cx="603" cy="272" r="38" class="meter-inner"></circle>
+                    <text x="603" y="283" text-anchor="middle" class="meter-letter">V</text>
+                    <text x="603" y="330" text-anchor="middle" class="component-reading" id="voltmeterValue">9.0 V</text>
+                  </g>
+
+                  <g class="direction" aria-hidden="true">
+                    <path d="M254 334 H390"></path>
+                    <path d="M379 325 L391 334 L379 343"></path>
+                    <text x="322" y="365" text-anchor="middle" class="component-hint">CONVENTIONAL CURRENT</text>
+                  </g>
+
+                  <g class="electron-flow" id="electronFlow" filter="url(#glow)" aria-hidden="true">
+                    <circle r="5"><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                    <circle r="5"><animateMotion dur="2.4s" begin="-0.4s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                    <circle r="5"><animateMotion dur="2.4s" begin="-0.8s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                    <circle r="5"><animateMotion dur="2.4s" begin="-1.2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                    <circle r="5"><animateMotion dur="2.4s" begin="-1.6s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                    <circle r="5"><animateMotion dur="2.4s" begin="-2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
+                  </g>
+                </svg>
+
+                <div class="stage-legend" aria-label="Circuit legend">
+                  <span><i class="legend-wire"></i> conductor</span>
+                  <span><i class="legend-charge"></i> charge marker</span>
+                  <span><i class="legend-meter"></i> measuring device</span>
+                  <span><i class="legend-load"></i> resistive load</span>
+                </div>
+              </div>
+
+              <div class="transport-bar">
+                <button class="run-button on" id="circuitToggle" type="button" role="switch" aria-checked="true">
+                  <span class="run-icon" aria-hidden="true">↯</span>
+                  <span><small>Circuit switch</small><strong id="toggleLabel">Closed</strong></span>
+                </button>
+                <div class="transport-divider"></div>
+                <div class="transport-reading">
+                  <small>Observation</small>
+                  <strong id="transportObservation">Current is proportional to voltage</strong>
+                </div>
+                <span class="model-badge">IDEAL COMPONENTS</span>
+              </div>
+            </article>
+
+            <article class="panel graph-panel" id="graph-panel">
+              <div class="panel-header compact">
+                <div>
+                  <span class="panel-index">ANALYSIS / 02</span>
+                  <h2>Voltage–current characteristic</h2>
+                  <p>At fixed resistance, the straight line confirms that current changes in direct proportion to voltage.</p>
+                </div>
+                <span class="slope-badge" id="slopeBadge">slope = 1 / 330 Ω</span>
+              </div>
+              <div class="graph-frame">
+                <canvas id="viGraph" width="820" height="360" role="img" aria-label="Voltage-current graph for 330 ohms"></canvas>
+              </div>
+              <div class="graph-footer">
+                <span><i class="graph-line-key"></i> theoretical response</span>
+                <span><i class="graph-point-key"></i> current operating point</span>
+                <span id="graphEquation">I = V / 330 Ω</span>
+              </div>
+            </article>
           </div>
-        </aside>
-      </section>
 
-      <section class="lab-shell" aria-label="Ohm's law circuit simulator">
-        <article class="circuit-board">
-          <div class="panel-heading">
-            <div><span class="eyebrow">Live circuit</span><h2>Series resistor test</h2></div>
-            <span class="status-chip active" id="statusChip"><i></i><span id="statusText">Current flowing</span></span>
-          </div>
-
-          <svg class="circuit-svg" viewBox="0 0 760 390" role="img" aria-labelledby="circuitTitle circuitDesc">
-            <title id="circuitTitle">Interactive Ohm's law circuit</title>
-            <desc id="circuitDesc">A battery, switch, ammeter, and resistor in series, with a voltmeter connected across the resistor.</desc>
-            <defs>
-              <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
-                <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
-                <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-              </filter>
-              <path id="flowPath" d="M110 112 H246 M326 112 H370 A43 43 0 0 0 456 112 H506 H668 H700 V310 H110 V232"></path>
-            </defs>
-
-            <g class="wires">
-              <path d="M110 112 H246"></path>
-              <path d="M326 112 H370"></path>
-              <path d="M456 112 H506"></path>
-              <path d="M654 112 H700 V310 H110 V232"></path>
-              <path d="M110 164 V112"></path>
-            </g>
-
-            <g class="battery">
-              <line x1="76" y1="176" x2="144" y2="176" class="battery-long"></line>
-              <line x1="88" y1="220" x2="132" y2="220" class="battery-short"></line>
-              <line x1="110" y1="176" x2="110" y2="164" class="wire"></line>
-              <line x1="110" y1="220" x2="110" y2="232" class="wire"></line>
-              <text x="156" y="182" class="component-label strong" id="batteryValue">9.0 V</text>
-              <text x="156" y="207" class="component-label">DC source</text>
-              <text x="55" y="183" class="polarity">+</text>
-              <text x="57" y="224" class="polarity">−</text>
-            </g>
-
-            <g class="circuit-switch">
-              <circle cx="246" cy="112" r="8"></circle>
-              <circle cx="326" cy="112" r="8"></circle>
-              <line x1="246" y1="112" x2="326" y2="112" id="switchArm"></line>
-              <text x="286" y="153" text-anchor="middle" class="component-label">switch</text>
-            </g>
-
-            <g class="meter ammeter">
-              <circle cx="413" cy="112" r="43"></circle>
-              <text x="413" y="122" text-anchor="middle" class="meter-letter">A</text>
-              <text x="413" y="177" text-anchor="middle" class="meter-reading" id="ammeterValue">27.3 mA</text>
-            </g>
-
-            <g class="resistor">
-              <path d="M506 112 L518 92 L536 132 L554 92 L572 132 L590 92 L608 132 L626 92 L642 132 L654 112"></path>
-              <text x="580" y="66" text-anchor="middle" class="component-label strong" id="resistorValue">330 Ω</text>
-              <text x="580" y="44" text-anchor="middle" class="component-label">resistor</text>
-            </g>
-
-            <g class="voltmeter">
-              <path d="M506 112 V226 H530"></path>
-              <path d="M630 226 H654 V112"></path>
-              <circle cx="580" cy="226" r="50"></circle>
-              <text x="580" y="237" text-anchor="middle" class="meter-letter">V</text>
-              <text x="580" y="294" text-anchor="middle" class="meter-reading" id="voltmeterValue">9.0 V</text>
-            </g>
-
-            <g class="direction">
-              <path d="M260 310 H360"></path>
-              <path d="M349 301 L361 310 L349 319"></path>
-              <text x="310" y="343" text-anchor="middle" class="component-label">conventional current</text>
-            </g>
-
-            <g class="electron-flow" id="electronFlow" filter="url(#glow)">
-              <circle r="5"><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-              <circle r="5"><animateMotion dur="2.4s" begin="-0.4s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-              <circle r="5"><animateMotion dur="2.4s" begin="-0.8s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-              <circle r="5"><animateMotion dur="2.4s" begin="-1.2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-              <circle r="5"><animateMotion dur="2.4s" begin="-1.6s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-              <circle r="5"><animateMotion dur="2.4s" begin="-2s" repeatCount="indefinite"><mpath href="#flowPath"></mpath></animateMotion></circle>
-            </g>
-          </svg>
-
-          <div class="circuit-legend" aria-label="Circuit legend">
-            <span><i class="legend-line"></i> conductor</span>
-            <span><i class="legend-dot"></i> moving charge</span>
-            <span><i class="legend-ring"></i> measuring device</span>
-          </div>
-        </article>
-
-        <aside class="control-panel">
-          <div class="control-heading">
-            <div><span class="eyebrow">Experiment controls</span><h2>Change the circuit</h2></div>
-            <button class="switch-control on" id="circuitToggle" type="button" role="switch" aria-checked="true">
-              <span class="switch-track"><i></i></span><span id="toggleLabel">Closed</span>
-            </button>
-          </div>
-
-          <div class="control-group">
-            <div class="control-label-row">
-              <label for="voltageRange">Source voltage</label>
-              <label class="number-field"><input id="voltageNumber" type="number" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage in volts"><span>V</span></label>
+          <aside class="panel control-panel" aria-labelledby="controls-title">
+            <div class="panel-header compact">
+              <div>
+                <span class="panel-index">PARAMETERS / 03</span>
+                <h2 id="controls-title">Experiment controls</h2>
+                <p>Change one variable at a time.</p>
+              </div>
+              <span class="control-status" aria-hidden="true">●</span>
             </div>
-            <input id="voltageRange" class="range voltage-range" type="range" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage">
-            <div class="range-scale"><span>0.5 V</span><span>24 V</span></div>
-          </div>
 
-          <div class="control-group">
-            <div class="control-label-row">
-              <label for="resistanceRange">Resistance</label>
-              <label class="number-field"><input id="resistanceNumber" type="number" min="50" max="1000" step="10" value="330" aria-label="Resistance in ohms"><span>Ω</span></label>
+            <div class="control-group voltage-control">
+              <div class="control-label-row">
+                <div><label for="voltageRange">Source voltage</label><small>Electrical potential difference</small></div>
+                <label class="number-field"><input id="voltageNumber" type="number" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage in volts"><span>V</span></label>
+              </div>
+              <input id="voltageRange" class="range voltage-range" type="range" min="0.5" max="24" step="0.5" value="9" aria-label="Source voltage">
+              <div class="range-scale"><span>0.5 V</span><span>12 V</span><span>24 V</span></div>
             </div>
-            <input id="resistanceRange" class="range resistance-range" type="range" min="50" max="1000" step="10" value="330" aria-label="Resistance">
-            <div class="range-scale"><span>50 Ω</span><span>1 kΩ</span></div>
-          </div>
 
-          <div class="presets">
-            <span class="mini-label">Quick setups</span>
-            <div class="preset-grid">
-              <button type="button" data-voltage="3" data-resistance="1000"><strong>Gentle</strong><small>3 V · 1 kΩ</small></button>
-              <button type="button" class="selected" data-voltage="9" data-resistance="330"><strong>Bench</strong><small>9 V · 330 Ω</small></button>
-              <button type="button" data-voltage="12" data-resistance="220"><strong>Bright</strong><small>12 V · 220 Ω</small></button>
-              <button type="button" data-voltage="24" data-resistance="50"><strong>High flow</strong><small>24 V · 50 Ω</small></button>
+            <div class="control-group resistance-control">
+              <div class="control-label-row">
+                <div><label for="resistanceRange">Load resistance</label><small>Opposition to current flow</small></div>
+                <label class="number-field"><input id="resistanceNumber" type="number" min="50" max="1000" step="10" value="330" aria-label="Resistance in ohms"><span>Ω</span></label>
+              </div>
+              <input id="resistanceRange" class="range resistance-range" type="range" min="50" max="1000" step="10" value="330" aria-label="Resistance">
+              <div class="range-scale"><span>50 Ω</span><span>500 Ω</span><span>1 kΩ</span></div>
+            </div>
+
+            <div class="preset-section">
+              <div class="section-label"><span>Quick setups</span><small>V / R</small></div>
+              <div class="preset-grid">
+                <button type="button" data-voltage="3" data-resistance="1000"><span>01</span><strong>Low current</strong><small>3 V · 1 kΩ</small></button>
+                <button type="button" class="selected" data-voltage="9" data-resistance="330"><span>02</span><strong>Lab bench</strong><small>9 V · 330 Ω</small></button>
+                <button type="button" data-voltage="12" data-resistance="220"><span>03</span><strong>Compare</strong><small>12 V · 220 Ω</small></button>
+                <button type="button" data-voltage="24" data-resistance="50"><span>04</span><strong>High current</strong><small>24 V · 50 Ω</small></button>
+              </div>
+            </div>
+
+            <div class="derived-section">
+              <div class="section-label"><span>Derived quantities</span><small>LIVE</small></div>
+              <div class="derived-grid">
+                <div><small>Conductance</small><strong id="conductanceReadout">3.03 mS</strong></div>
+                <div><small>Current</small><strong id="derivedCurrent">27.3 mA</strong></div>
+                <div><small>Power</small><strong id="derivedPower">245 mW</strong></div>
+                <div><small>Energy / 1 s</small><strong id="energyReadout">245 mJ</strong></div>
+              </div>
+              <div class="thermal-status" id="thermalStatus"><i aria-hidden="true"></i><span>Low dissipation in ideal load</span></div>
+            </div>
+
+            <div class="equation-card">
+              <div><span>OHM'S LAW</span><small>LIVE SUBSTITUTION</small></div>
+              <strong>I = V ÷ R</strong>
+              <code id="calculationText">9.0 ÷ 330 = 0.0273 A</code>
+              <p id="calculationNote">Voltage drives current; resistance limits it.</p>
+            </div>
+
+            <div class="control-note">
+              <span aria-hidden="true">i</span>
+              <p>This is an ideal DC model. Real components have tolerance, internal resistance and power limits.</p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="observation-panel" aria-live="polite">
+          <div class="observation-mark" aria-hidden="true">∝</div>
+          <div>
+            <span class="panel-index">CURRENT OBSERVATION</span>
+            <h2 id="insightTitle">Ohm's law is in balance</h2>
+            <p id="insightBody">9.0 volts across 330 ohms produces 27.3 mA of current.</p>
+          </div>
+          <div class="observation-formula"><span>RELATIONSHIP</span><strong>V = I × R</strong></div>
+        </section>
+
+        <section class="panel notebook-section" id="notebook" aria-labelledby="notebook-title">
+          <div class="panel-header notebook-header">
+            <div>
+              <span class="panel-index">EXPERIMENT NOTEBOOK / 04</span>
+              <h2 id="notebook-title">Record and compare measurements</h2>
+              <p>Capture up to eight operating points. Keep resistance fixed and vary voltage to test proportionality.</p>
+            </div>
+            <div class="notebook-actions">
+              <button class="secondary-button hidden" id="clearReadings" type="button">Clear</button>
+              <button class="secondary-button" id="exportReadings" type="button" disabled>Export CSV</button>
+              <button class="primary-button" id="recordReading" type="button"><span aria-hidden="true">+</span> Record reading</button>
             </div>
           </div>
-        </aside>
-      </section>
-
-      <section class="readouts" aria-label="Live measurements" aria-live="polite">
-        <article class="readout voltage-readout"><span class="metric-symbol">V</span><div><small>Voltage</small><strong><span id="voltageReadout">9.0</span> <i>V</i></strong></div></article>
-        <article class="readout resistance-readout"><span class="metric-symbol">R</span><div><small>Resistance</small><strong><span id="resistanceReadout">330</span> <i>Ω</i></strong></div></article>
-        <article class="readout current-readout"><span class="metric-symbol">I</span><div><small>Current</small><strong><span id="currentReadout">27.3</span> <i id="currentUnit">mA</i></strong></div></article>
-        <article class="readout power-readout"><span class="metric-symbol">P</span><div><small>Power</small><strong><span id="powerReadout">245</span> <i id="powerUnit">mW</i></strong></div></article>
-      </section>
-
-      <section class="insight-strip" aria-live="polite">
-        <span class="insight-icon" aria-hidden="true">↗</span>
-        <div>
-          <span class="eyebrow">What you're observing</span>
-          <h2 id="insightTitle">Ohm's law is in balance</h2>
-          <p id="insightBody">9.0 volts across 330 ohms produces 27.3 mA of current.</p>
-        </div>
-        <div class="calculation"><span>I = V ÷ R</span><strong id="calculationText">9.0 ÷ 330 = 0.0273 A</strong><small id="calculationNote"></small></div>
-      </section>
-
-      <section class="analysis-grid">
-        <article class="graph-card">
-          <div class="panel-heading compact">
-            <div><span class="eyebrow">Voltage–current graph</span><h2>A straight-line relationship</h2></div>
-            <span class="slope-badge" id="slopeBadge">slope = 1 / 330 Ω</span>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Trial</th><th>Voltage</th><th>Resistance</th><th>Current</th><th>Power</th><th>Circuit</th></tr></thead>
+              <tbody id="readingsBody"><tr class="empty-row"><td colspan="6">No observations recorded. Configure the circuit, then select “Record reading”.</td></tr></tbody>
+            </table>
           </div>
-          <canvas id="viGraph" width="760" height="330" role="img" aria-label="Voltage-current graph for 330 ohms"></canvas>
-          <p class="graph-note">For a fixed resistance, equal increases in voltage produce equal increases in current.</p>
-        </article>
+        </section>
 
-        <article class="principle-card">
-          <span class="eyebrow">Try these comparisons</span>
-          <h2>Predict, adjust, observe.</h2>
-          <div class="principle-list">
-            <div><span>01</span><p><strong>Double the voltage.</strong> Keep resistance fixed. Current doubles.</p></div>
-            <div><span>02</span><p><strong>Double the resistance.</strong> Keep voltage fixed. Current halves.</p></div>
-            <div><span>03</span><p><strong>Open the switch.</strong> The current becomes zero immediately.</p></div>
-          </div>
-          <div class="formula-triangle" aria-hidden="true"><span>V</span><span>I</span><span>R</span></div>
-        </article>
-      </section>
+        <section class="theory-grid" id="theory" aria-label="Ohm's law theory and guided investigations">
+          <article class="panel theory-card">
+            <span class="panel-index">THEORY / 05</span>
+            <h2>One law, three arrangements</h2>
+            <p>Choose the form that isolates the quantity you need. Use amperes, volts and ohms for SI calculations.</p>
+            <div class="formula-row">
+              <div><small>Find voltage</small><strong>V = I × R</strong></div>
+              <div><small>Find current</small><strong>I = V ÷ R</strong></div>
+              <div><small>Find resistance</small><strong>R = V ÷ I</strong></div>
+            </div>
+          </article>
 
-      <section class="notebook-section">
-        <div class="section-heading">
-          <div><span class="eyebrow">Experiment notebook</span><h2>Compare your readings</h2><p>Capture up to eight circuit states and look for the pattern.</p></div>
-          <div class="notebook-actions"><button class="secondary-button hidden" id="clearReadings" type="button">Clear</button><button class="primary-button" id="recordReading" type="button">Record reading <span>+</span></button></div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Trial</th><th>Voltage</th><th>Resistance</th><th>Current</th><th>Power</th><th>Circuit</th></tr></thead>
-            <tbody id="readingsBody"><tr class="empty-row"><td colspan="6">Set the controls, then record your first reading.</td></tr></tbody>
-          </table>
-        </div>
-      </section>
+          <article class="panel investigation-card">
+            <span class="panel-index">GUIDED INVESTIGATION</span>
+            <h2>Predict before you adjust</h2>
+            <ol>
+              <li><span>01</span><p><strong>Double voltage.</strong> Hold resistance constant; current should double.</p></li>
+              <li><span>02</span><p><strong>Double resistance.</strong> Hold voltage constant; current should halve.</p></li>
+              <li><span>03</span><p><strong>Open the switch.</strong> A broken path makes measured current zero.</p></li>
+            </ol>
+          </article>
+        </section>
+      </main>
 
-      <section class="formula-guide" aria-label="Ohm's law equation guide">
-        <div class="guide-intro"><span class="eyebrow">Equation guide</span><h2>Cover the value you need.</h2><p>Ohm's law can be rearranged to solve any one of the three quantities.</p></div>
-        <div class="guide-formula"><span>Find voltage</span><strong>V = I × R</strong><small>volts = amps × ohms</small></div>
-        <div class="guide-formula"><span>Find current</span><strong>I = V ÷ R</strong><small>amps = volts ÷ ohms</small></div>
-        <div class="guide-formula"><span>Find resistance</span><strong>R = V ÷ I</strong><small>ohms = volts ÷ amps</small></div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="brand"><span class="brand-mark" aria-hidden="true">D</span><span><strong>Dinglo</strong><small>Open Physics Lab</small></span></div>
-      <p>Built for curious minds. Change one variable at a time.</p>
-      <a href="#top">Back to top ↑</a>
-    </footer>
+      <footer>
+        <div class="footer-brand"><span class="brand-mark" aria-hidden="true">D</span><div><strong>Dinglo Open Physics Lab</strong><small>Interactive science, observable systems.</small></div></div>
+        <p>Ohm's Law Circuit · Experiment 05</p>
+        <a href="#top">Return to top ↑</a>
+      </footer>
+    </div>
 
     <noscript><p class="noscript">This simulator needs JavaScript enabled to calculate and animate the circuit.</p></noscript>
     <script src="script.js"></script>
