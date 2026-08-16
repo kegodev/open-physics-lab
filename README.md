@@ -117,7 +117,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <h3>Ohm's Law Circuit</h3>
       <p><code>V = IR</code></p>
       <p>Build intuition for voltage, resistance, current, and electrical power in a complete series circuit.</p>
-      <p><strong>Adjust</strong><br>source voltage · resistance · circuit switch · experiment presets</p>
+      <p><strong>Adjust</strong><br>source voltage · independent current · circuit switch · experiment presets</p>
       <p><a href="https://kegodev.github.io/open-physics-lab/ohms-law/"><strong>Launch simulator →</strong></a></p>
     </td>
     <td width="20%" align="center">
@@ -153,9 +153,10 @@ Every simulator uses plain HTML, CSS, and JavaScript. There is no framework to l
 
 - A Dinglo-native dark instrument interface aligned with the other physics labs
 - A scientifically structured circuit with a DC source, switch, resistor, series ammeter, and parallel voltmeter
-- Live `V`, `R`, `I`, and `P` measurements plus conductance and one-second energy
+- Independent voltage and current controls with live resistance calculated from `R = V ÷ I`
 - Animated charge flow whose speed responds to current
-- A fixed-scale voltage–current graph with the theoretical response and current operating point
+- Live `V`, `R`, `I`, and `P` measurements plus conductance, power, and one-second energy
+- A fixed-scale voltage–current graph with the calculated-resistance response and current operating point
 - Four experiment presets and an eight-row observation notebook with CSV export
 - Responsive controls, keyboard focus states, semantic labels, and reduced-motion support
 
