@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Observe Ohm's law in a Dinglo interactive physics lab with a live DC circuit, voltage and resistance controls, current measurements, graphing, and an experiment notebook.">
+    <meta name="description" content="Observe Ohm's law in a Dinglo interactive physics lab with independent voltage and current controls, calculated resistance, live measurements, graphing, and an experiment notebook.">
     <meta name="theme-color" content="#07111f">
     <title>Ohm's Law Circuit · Dinglo Open Physics Lab</title>
     <link rel="stylesheet" href="styles.css">
@@ -49,7 +49,7 @@
             <span class="eyebrow">Interactive electricity laboratory</span>
             <h1 id="lab-title">Observe Ohm's law in a complete circuit.</h1>
           </div>
-          <p>Change the source voltage or resistance, then watch the ammeter, voltmeter, current flow, power, and graph respond in real time.</p>
+          <p>Set voltage and current independently, then watch resistance, power, the circuit meters, and the graph rebalance through Ohm's law.</p>
         </section>
 
         <section class="workspace" aria-label="Ohm's law simulator workspace">
@@ -71,7 +71,7 @@
                 </article>
                 <article class="measurement resistance-measurement">
                   <span class="measurement-symbol">R</span>
-                  <div><small>Load resistance</small><strong><span id="resistanceReadout">330</span><em>Ω</em></strong></div>
+                  <div><small>Calculated resistance</small><strong><span id="resistanceReadout">330</span><em>Ω</em></strong></div>
                 </article>
                 <article class="measurement current-measurement">
                   <span class="measurement-symbol">I</span>
@@ -192,7 +192,7 @@
                 <div class="transport-divider"></div>
                 <div class="transport-reading">
                   <small>Observation</small>
-                  <strong id="transportObservation">Current is proportional to voltage</strong>
+                  <strong id="transportObservation">Current setpoint is independent of voltage</strong>
                 </div>
                 <span class="model-badge">IDEAL COMPONENTS</span>
               </div>
@@ -203,7 +203,7 @@
                 <div>
                   <span class="panel-index">ANALYSIS / 02</span>
                   <h2>Voltage–current characteristic</h2>
-                  <p>At fixed resistance, the straight line confirms that current changes in direct proportion to voltage.</p>
+                  <p>The line shows the resistance implied by your selected voltage and current operating point.</p>
                 </div>
                 <span class="slope-badge" id="slopeBadge">slope = 1 / 330 Ω</span>
               </div>
@@ -223,7 +223,7 @@
               <div>
                 <span class="panel-index">PARAMETERS / 03</span>
                 <h2 id="controls-title">Experiment controls</h2>
-                <p>Change one variable at a time.</p>
+                <p>Set voltage and current; resistance is calculated.</p>
               </div>
               <span class="control-status" aria-hidden="true">●</span>
             </div>
@@ -237,22 +237,22 @@
               <div class="range-scale"><span>0.5 V</span><span>12 V</span><span>24 V</span></div>
             </div>
 
-            <div class="control-group resistance-control">
+            <div class="control-group current-control">
               <div class="control-label-row">
-                <div><label for="resistanceRange">Load resistance</label><small>Opposition to current flow</small></div>
-                <label class="number-field"><input id="resistanceNumber" type="number" min="50" max="1000" step="10" value="330" aria-label="Resistance in ohms"><span>Ω</span></label>
+                <div><label for="currentRange">Circuit current</label><small>Independent current setpoint</small></div>
+                <label class="number-field"><input id="currentNumber" type="number" min="1" max="500" step="0.1" value="27.3" aria-label="Current in milliamperes"><span>mA</span></label>
               </div>
-              <input id="resistanceRange" class="range resistance-range" type="range" min="50" max="1000" step="10" value="330" aria-label="Resistance">
-              <div class="range-scale"><span>50 Ω</span><span>500 Ω</span><span>1 kΩ</span></div>
+              <input id="currentRange" class="range current-range" type="range" min="1" max="500" step="1" value="27.3" aria-label="Circuit current in milliamperes">
+              <div class="range-scale"><span>1 mA</span><span>250 mA</span><span>500 mA</span></div>
             </div>
 
             <div class="preset-section">
-              <div class="section-label"><span>Quick setups</span><small>V / R</small></div>
+              <div class="section-label"><span>Quick setups</span><small>V / I</small></div>
               <div class="preset-grid">
-                <button type="button" data-voltage="3" data-resistance="1000"><span>01</span><strong>Low current</strong><small>3 V · 1 kΩ</small></button>
-                <button type="button" class="selected" data-voltage="9" data-resistance="330"><span>02</span><strong>Lab bench</strong><small>9 V · 330 Ω</small></button>
-                <button type="button" data-voltage="12" data-resistance="220"><span>03</span><strong>Compare</strong><small>12 V · 220 Ω</small></button>
-                <button type="button" data-voltage="24" data-resistance="50"><span>04</span><strong>High current</strong><small>24 V · 50 Ω</small></button>
+                <button type="button" data-voltage="3" data-current="0.003"><span>01</span><strong>Low current</strong><small>3 V · 3 mA</small></button>
+                <button type="button" class="selected" data-voltage="9" data-current="0.027272727"><span>02</span><strong>Lab bench</strong><small>9 V · 27.3 mA</small></button>
+                <button type="button" data-voltage="12" data-current="0.054545455"><span>03</span><strong>Compare</strong><small>12 V · 54.5 mA</small></button>
+                <button type="button" data-voltage="24" data-current="0.48"><span>04</span><strong>High current</strong><small>24 V · 480 mA</small></button>
               </div>
             </div>
 
@@ -260,7 +260,7 @@
               <div class="section-label"><span>Derived quantities</span><small>LIVE</small></div>
               <div class="derived-grid">
                 <div><small>Conductance</small><strong id="conductanceReadout">3.03 mS</strong></div>
-                <div><small>Current</small><strong id="derivedCurrent">27.3 mA</strong></div>
+                <div><small>Resistance</small><strong id="derivedResistance">330 Ω</strong></div>
                 <div><small>Power</small><strong id="derivedPower">245 mW</strong></div>
                 <div><small>Energy / 1 s</small><strong id="energyReadout">245 mJ</strong></div>
               </div>
@@ -269,9 +269,9 @@
 
             <div class="equation-card">
               <div><span>OHM'S LAW</span><small>LIVE SUBSTITUTION</small></div>
-              <strong>I = V ÷ R</strong>
-              <code id="calculationText">9.0 ÷ 330 = 0.0273 A</code>
-              <p id="calculationNote">Voltage drives current; resistance limits it.</p>
+              <strong>R = V ÷ I</strong>
+              <code id="calculationText">9.0 ÷ 0.0273 = 330 Ω</code>
+              <p id="calculationNote">Current stays fixed while voltage changes; resistance recalculates.</p>
             </div>
 
             <div class="control-note">
@@ -296,7 +296,7 @@
             <div>
               <span class="panel-index">EXPERIMENT NOTEBOOK / 04</span>
               <h2 id="notebook-title">Record and compare measurements</h2>
-              <p>Capture up to eight operating points. Keep resistance fixed and vary voltage to test proportionality.</p>
+              <p>Capture up to eight operating points. Vary voltage while current stays fixed and compare the calculated resistance.</p>
             </div>
             <div class="notebook-actions">
               <button class="secondary-button hidden" id="clearReadings" type="button">Clear</button>
@@ -328,8 +328,8 @@
             <span class="panel-index">GUIDED INVESTIGATION</span>
             <h2>Predict before you adjust</h2>
             <ol>
-              <li><span>01</span><p><strong>Double voltage.</strong> Hold resistance constant; current should double.</p></li>
-              <li><span>02</span><p><strong>Double resistance.</strong> Hold voltage constant; current should halve.</p></li>
+              <li><span>01</span><p><strong>Double voltage.</strong> Keep the current setpoint fixed; the required resistance should double.</p></li>
+              <li><span>02</span><p><strong>Double current.</strong> Keep voltage fixed; the calculated resistance should halve.</p></li>
               <li><span>03</span><p><strong>Open the switch.</strong> A broken path makes measured current zero.</p></li>
             </ol>
           </article>
