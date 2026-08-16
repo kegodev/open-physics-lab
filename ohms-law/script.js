@@ -3,6 +3,7 @@
 
   const state = {
     voltage: 9,
+    current: 9 / 330,
     resistance: 330,
     closed: true,
     readings: [],
@@ -12,8 +13,8 @@
   const elements = {
     voltageRange: $("voltageRange"),
     voltageNumber: $("voltageNumber"),
-    resistanceRange: $("resistanceRange"),
-    resistanceNumber: $("resistanceNumber"),
+    currentRange: $("currentRange"),
+    currentNumber: $("currentNumber"),
     toggle: $("circuitToggle"),
     toggleLabel: $("toggleLabel"),
     switchArm: $("switchArm"),
@@ -33,7 +34,7 @@
     powerReadout: $("powerReadout"),
     powerUnit: $("powerUnit"),
     conductanceReadout: $("conductanceReadout"),
-    derivedCurrent: $("derivedCurrent"),
+    derivedResistance: $("derivedResistance"),
     derivedPower: $("derivedPower"),
     energyReadout: $("energyReadout"),
     thermalStatus: $("thermalStatus"),
@@ -80,6 +81,20 @@
   const formatPower = (watts) => {
     const reading = powerDisplay(watts);
     return `${reading.value} ${reading.unit}`;
+  };
+
+  const resistanceNumber = (ohms) => {
+    if (ohms >= 100) return ohms.toFixed(0);
+    if (ohms >= 10) return ohms.toFixed(1);
+    return ohms.toFixed(2);
+  };
+
+  const formatResistance = (ohms) => {
+    if (ohms >= 1000) {
+      const kiloOhms = ohms / 1000;
+      return `${kiloOhms.toFixed(kiloOhms >= 10 ? 1 : 2)} kΩ`;
+    }
+    return `${resistanceNumber(ohms)} Ω`;
   };
 
   function drawGraph(current) {
@@ -181,32 +196,32 @@
 
     canvas.setAttribute(
       "aria-label",
-      `Voltage-current graph for ${state.resistance} ohms. The present operating point is ${state.voltage} volts and ${current.toFixed(4)} amperes.`,
+      `Voltage-current graph for ${formatResistance(state.resistance)}. The present operating point is ${state.voltage} volts and ${current.toFixed(4)} amperes.`,
     );
   }
 
   function updateInsight(current) {
     if (!state.closed) {
       elements.insightTitle.textContent = "The conducting path is interrupted";
-      elements.insightBody.textContent = "Opening the switch makes measured current zero. The source still has potential difference, but charge has no complete path.";
-      elements.transportObservation.textContent = "No current — the path is interrupted";
+      elements.insightBody.textContent = `The ammeter reads zero while the switch is open. The current control remains set to ${formatCurrent(state.current)} and resumes when the path closes.`;
+      elements.transportObservation.textContent = "Measured current is zero — setpoint retained";
       return;
     }
     if (current >= 0.25) {
-      elements.insightTitle.textContent = "Low resistance produces a strong current";
-      elements.insightBody.textContent = "The load offers little opposition, so current and ideal load power both rise sharply.";
-      elements.transportObservation.textContent = "Low resistance produces a strong current";
+      elements.insightTitle.textContent = "A high current needs a low resistance";
+      elements.insightBody.textContent = `${formatCurrent(current)} at ${state.voltage.toFixed(1)} volts requires ${formatResistance(state.resistance)} and produces strong ideal load power.`;
+      elements.transportObservation.textContent = "High current setpoint — check ideal load power";
       return;
     }
     if (current <= 0.02) {
-      elements.insightTitle.textContent = "Resistance is limiting the current";
-      elements.insightBody.textContent = "Only a small current passes through the load. Increase voltage or lower resistance and observe the ammeter.";
-      elements.transportObservation.textContent = "Resistance is limiting current flow";
+      elements.insightTitle.textContent = "A low current needs more resistance";
+      elements.insightBody.textContent = `The selected ${formatCurrent(current)} setpoint requires ${formatResistance(state.resistance)} at ${state.voltage.toFixed(1)} volts.`;
+      elements.transportObservation.textContent = "Low current setpoint — resistance increased";
       return;
     }
-    elements.insightTitle.textContent = "Voltage, resistance and current are in balance";
-    elements.insightBody.textContent = `${state.voltage.toFixed(1)} volts across ${state.resistance} ohms produces ${formatCurrent(current)} of current.`;
-    elements.transportObservation.textContent = "Current is proportional to applied voltage";
+    elements.insightTitle.textContent = "Voltage, current and resistance are in balance";
+    elements.insightBody.textContent = `${state.voltage.toFixed(1)} volts with ${formatCurrent(current)} of current requires ${formatResistance(state.resistance)}.`;
+    elements.transportObservation.textContent = `Current held at ${formatCurrent(state.current)} while voltage changes`;
   }
 
   function updateThermalStatus(power) {
@@ -230,38 +245,39 @@
   }
 
   function updatePresetSelection() {
-    document.querySelectorAll("[data-voltage][data-resistance]").forEach((button) => {
+    document.querySelectorAll("[data-voltage][data-current]").forEach((button) => {
       const selected = Number(button.dataset.voltage) === state.voltage
-        && Number(button.dataset.resistance) === state.resistance;
+        && Math.abs(Number(button.dataset.current) - state.current) < 0.000001;
       button.classList.toggle("selected", selected);
     });
   }
 
   function update() {
-    const theoreticalCurrent = state.voltage / state.resistance;
-    const current = state.closed ? theoreticalCurrent : 0;
+    state.resistance = state.voltage / state.current;
+
+    const current = state.closed ? state.current : 0;
     const power = state.closed ? state.voltage * current : 0;
     const currentReading = currentDisplay(current);
     const powerReading = powerDisplay(power);
 
     elements.voltageRange.value = state.voltage;
     elements.voltageNumber.value = state.voltage;
-    elements.resistanceRange.value = state.resistance;
-    elements.resistanceNumber.value = state.resistance;
+    elements.currentRange.value = (state.current * 1000).toFixed(1);
+    elements.currentNumber.value = (state.current * 1000).toFixed(1);
 
     elements.batteryValue.textContent = `${state.voltage.toFixed(1)} V`;
-    elements.resistorValue.textContent = `${state.resistance} Ω`;
+    elements.resistorValue.textContent = formatResistance(state.resistance);
     elements.ammeterValue.textContent = formatCurrent(current);
     elements.voltmeterValue.textContent = `${state.closed ? state.voltage.toFixed(1) : "0.0"} V`;
 
     elements.voltageReadout.textContent = state.voltage.toFixed(1);
-    elements.resistanceReadout.textContent = state.resistance;
+    elements.resistanceReadout.textContent = resistanceNumber(state.resistance);
     elements.currentReadout.textContent = currentReading.value;
     elements.currentUnit.textContent = currentReading.unit;
     elements.powerReadout.textContent = powerReading.value;
     elements.powerUnit.textContent = powerReading.unit;
     elements.conductanceReadout.textContent = conductanceDisplay(state.resistance);
-    elements.derivedCurrent.textContent = formatCurrent(current);
+    elements.derivedResistance.textContent = formatResistance(state.resistance);
     elements.derivedPower.textContent = formatPower(power);
     elements.energyReadout.textContent = energyDisplay(power);
 
@@ -282,12 +298,12 @@
       animation.setAttribute("begin", `${(-index * duration) / 6}s`);
     });
 
-    elements.calculationText.textContent = `${state.voltage.toFixed(1)} ÷ ${state.resistance} = ${theoreticalCurrent.toFixed(4)} A`;
+    elements.calculationText.textContent = `${state.voltage.toFixed(1)} ÷ ${state.current.toFixed(4)} = ${formatResistance(state.resistance)}`;
     elements.calculationNote.textContent = state.closed
-      ? "Voltage drives current; resistance limits it."
-      : "This calculated current applies when the switch is closed.";
-    elements.slopeBadge.textContent = `slope = 1 / ${state.resistance} Ω`;
-    elements.graphEquation.textContent = `I = V / ${state.resistance} Ω`;
+      ? "Current stays fixed while voltage changes; resistance recalculates."
+      : "The current control stays set, but the ammeter reads zero until the circuit closes.";
+    elements.slopeBadge.textContent = `slope = 1 / ${formatResistance(state.resistance)}`;
+    elements.graphEquation.textContent = `I = V / ${formatResistance(state.resistance)}`;
 
     updateInsight(current);
     updateThermalStatus(power);
@@ -309,7 +325,7 @@
       <tr>
         <td><span class="trial-number">${String(index + 1).padStart(2, "0")}</span></td>
         <td>${reading.voltage.toFixed(1)} V</td>
-        <td>${reading.resistance} Ω</td>
+        <td>${formatResistance(reading.resistance)}</td>
         <td>${formatCurrent(reading.current)}</td>
         <td>${formatPower(reading.power)}</td>
         <td><span class="table-status ${reading.closed ? "closed" : ""}">${reading.closed ? "Closed" : "Open"}</span></td>
@@ -324,7 +340,7 @@
       ...state.readings.map((reading, index) => [
         index + 1,
         reading.voltage.toFixed(1),
-        reading.resistance,
+        reading.resistance.toFixed(6),
         reading.current.toFixed(6),
         reading.power.toFixed(6),
         reading.closed ? "closed" : "open",
@@ -346,8 +362,8 @@
     update();
   });
 
-  elements.resistanceRange.addEventListener("input", (event) => {
-    state.resistance = Number(event.target.value);
+  elements.currentRange.addEventListener("input", (event) => {
+    state.current = Number(event.target.value) / 1000;
     update();
   });
 
@@ -357,9 +373,10 @@
     update();
   });
 
-  elements.resistanceNumber.addEventListener("input", (event) => {
+  elements.currentNumber.addEventListener("input", (event) => {
     if (event.target.value === "") return;
-    state.resistance = clamp(Math.round((Number(event.target.value) || 50) / 10) * 10, 50, 1000);
+    const milliamps = clamp(Number(event.target.value) || 1, 1, 500);
+    state.current = milliamps / 1000;
     update();
   });
 
@@ -368,17 +385,17 @@
     update();
   });
 
-  document.querySelectorAll("[data-voltage][data-resistance]").forEach((button) => {
+  document.querySelectorAll("[data-voltage][data-current]").forEach((button) => {
     button.addEventListener("click", () => {
       state.voltage = Number(button.dataset.voltage);
-      state.resistance = Number(button.dataset.resistance);
+      state.current = Number(button.dataset.current);
       state.closed = true;
       update();
     });
   });
 
   $("recordReading").addEventListener("click", () => {
-    const current = state.closed ? state.voltage / state.resistance : 0;
+    const current = state.closed ? state.current : 0;
     const power = state.closed ? state.voltage * current : 0;
     state.readings = [...state.readings.slice(-7), {
       voltage: state.voltage,
@@ -399,6 +416,7 @@
 
   $("resetLab").addEventListener("click", () => {
     state.voltage = 9;
+    state.current = 9 / 330;
     state.resistance = 330;
     state.closed = true;
     state.readings = [];
