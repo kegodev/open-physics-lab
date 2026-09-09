@@ -94,12 +94,12 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
 
 <table>
   <tr>
-    <td width="20%" align="center">
+    <td width="58%">
       <a href="https://kegodev.github.io/open-physics-lab/blackbody-spectrum/">
         <img src="assets/blackbody-spectrum-screenshot.jpg" alt="Blackbody Spectrum Simulator showing the spectral radiance graph, temperature controls, and live measurements">
       </a>
     </td>
-    <td width="80%" valign="top">
+    <td width="42%" valign="top">
       <p><sub>EXPERIMENT 04</sub></p>
       <h3>Blackbody Spectrum</h3>
       <p><code>&lambda;<sub>max</sub>T = b</code></p>
@@ -112,7 +112,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
 
 <table>
   <tr>
-    <td width="80%" valign="top">
+    <td width="42%" valign="top">
       <p><sub>EXPERIMENT 05 · NEW</sub></p>
       <h3>Ohm's Law Circuit</h3>
       <p><code>V = IR</code></p>
@@ -120,7 +120,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p><strong>Adjust</strong><br>source voltage · independent current · circuit switch · experiment presets</p>
       <p><a href="https://kegodev.github.io/open-physics-lab/ohms-law/"><strong>Launch simulator →</strong></a></p>
     </td>
-    <td width="20%" align="center">
+    <td width="58%">
       <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
         <img src="assets/ohms-law-screenshot.jpg" alt="Ohm's Law Circuit Simulator showing a live series circuit, controls, and electrical measurements">
       </a>
