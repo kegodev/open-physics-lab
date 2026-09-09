@@ -96,7 +96,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
   <tr>
     <td width="20%" align="center">
       <a href="https://kegodev.github.io/open-physics-lab/blackbody-spectrum/">
-        <img src="https://api.iconify.design/lucide:sun.svg?color=%23F59E0B" width="92" height="92" alt="Radiating body icon">
+        <img src="assets/blackbody-spectrum-screenshot.jpg" alt="Blackbody Spectrum Simulator showing the spectral radiance graph, temperature controls, and live measurements">
       </a>
     </td>
     <td width="80%" valign="top">
@@ -122,7 +122,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
     </td>
     <td width="20%" align="center">
       <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
-        <img src="https://api.iconify.design/lucide:circuit-board.svg?color=%2348D7E8" width="92" height="92" alt="Electric circuit board icon">
+        <img src="assets/ohms-law-screenshot.jpg" alt="Ohm's Law Circuit Simulator showing a live series circuit, controls, and electrical measurements">
       </a>
     </td>
   </tr>
