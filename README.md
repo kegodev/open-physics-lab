@@ -58,6 +58,11 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
 
 <table>
   <tr>
+    <td width="58%">
+      <a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/">
+        <img src="assets/simple-pendulum-simulator-1786329136651.jpg" alt="Simple Pendulum Simulator with an animated pendulum, measurement panel, and adjustable controls">
+      </a>
+    </td>
     <td width="42%" valign="top">
       <p><sub>EXPERIMENT 02</sub></p>
       <h3>Simple Pendulum</h3>
@@ -65,11 +70,6 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p>Measure oscillation in real time and compare it with the small-angle model.</p>
       <p><strong>Adjust</strong><br>length · gravity · mass · initial angle</p>
       <p><a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/"><strong>Launch simulator →</strong></a></p>
-    </td>
-    <td width="58%">
-      <a href="https://kegodev.github.io/open-physics-lab/simple-pendulum/">
-        <img src="assets/simple-pendulum-simulator-1786329136651.jpg" alt="Simple Pendulum Simulator with an animated pendulum, measurement panel, and adjustable controls">
-      </a>
     </td>
   </tr>
 </table>
@@ -112,6 +112,11 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
 
 <table>
   <tr>
+    <td width="58%">
+      <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
+        <img src="assets/ohms-law-screenshot.jpg" alt="Ohm's Law Circuit Simulator showing a live series circuit, controls, and electrical measurements">
+      </a>
+    </td>
     <td width="42%" valign="top">
       <p><sub>EXPERIMENT 05 · NEW</sub></p>
       <h3>Ohm's Law Circuit</h3>
@@ -119,11 +124,6 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
       <p>Build intuition for voltage, resistance, current, and electrical power in a complete series circuit.</p>
       <p><strong>Adjust</strong><br>source voltage · independent current · circuit switch · experiment presets</p>
       <p><a href="https://kegodev.github.io/open-physics-lab/ohms-law/"><strong>Launch simulator →</strong></a></p>
-    </td>
-    <td width="58%">
-      <a href="https://kegodev.github.io/open-physics-lab/ohms-law/">
-        <img src="assets/ohms-law-screenshot.jpg" alt="Ohm's Law Circuit Simulator showing a live series circuit, controls, and electrical measurements">
-      </a>
     </td>
   </tr>
 </table>
