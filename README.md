@@ -34,7 +34,7 @@ Five browser-based experiments that turn equations into motion, measurements, an
 
 ---
 
-## 🪐 Experiment gallery
+## Experiment gallery
 
 Each lab pairs an interactive model with live measurements, graphs, and controls. Start with a familiar equation, then push it until your intuition catches up.
 
@@ -140,7 +140,7 @@ Each lab pairs an interactive model with live measurements, graphs, and controls
 
 ---
 
-## 🎛️ Built for active learning
+## Built for active learning
 
 | Adjustable controls | Live response | Graphs and measurements |
 |:---:|:---:|:---:|
@@ -162,7 +162,7 @@ Every simulator uses plain HTML, CSS, and JavaScript. There is no framework to l
 
 ---
 
-## 🤝 Why contribute?
+## Why contribute?
 
 This repository is designed for focused, useful pull requests. A contribution can be as small as one corrected label or as ambitious as a complete experiment.
 
@@ -178,34 +178,7 @@ If something feels confusing, open an issue. If you can improve it, fork the rep
 
 ---
 
-## 💻 Run locally
-
-No package installation or build tools are required.
-
-1. Fork the repository for the purpose of contributing.
-2. Clone your fork and enter the project directory.
-3. Start a small local HTTP server:
-
-   ```bash
-   python -m http.server 8000
-   ```
-
-4. Open a simulator route in your browser.
-
-| Route | Experiment |
-|---|---|
-| `http://localhost:8000/` | Photoelectric Effect |
-| `http://localhost:8000/simple-pendulum/` | Simple Pendulum |
-| `http://localhost:8000/simple-harmonic-motion/` | Simple Harmonic Motion |
-| `http://localhost:8000/blackbody-spectrum/` | Blackbody Spectrum |
-| `http://localhost:8000/ohms-law/` | Ohm's Law Circuit |
-
-> [!NOTE]
-> Local copies and modifications are permitted only for evaluating the project and preparing a contribution back to this repository, as described in the license.
-
----
-
-## 🗂️ Project map
+## Project map
 
 ```text
 open-physics-lab/
@@ -235,7 +208,7 @@ The small, predictable structure lets contributors work on markup, styling, or s
 
 ---
 
-## 🧩 Contributing
+## Contributing
 
 1. Check the existing issues or open one that describes the change.
 2. Create a focused branch in your GitHub fork.
@@ -247,7 +220,7 @@ By submitting a contribution, you confirm that it is your original work, or that
 
 ---
 
-## ⚖️ License
+## License
 
 > **Dinglo Restricted Collaboration License v1.0**  
 > Source-available for viewing, learning, evaluation, and contribution preparation. It is **not an open-source license**.
@@ -260,7 +233,7 @@ Read the complete license before copying or modifying the project.
 
 ---
 
-## 📍 Official project locations
+## Official project locations
 
 | Destination | Link |
 |---|---|
